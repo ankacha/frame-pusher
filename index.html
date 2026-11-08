@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Frame Pusher v2.11 – Ghost</title>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Frame Pusher v2.12 – Clear</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{--bg:#f1ebfc;--panel:#fbf9ff;--ink:#241838;--mut:#6d6188;--line:#d8cbf0;--mem:#43376a;--acc:#7c3aed;--grid:#d3c5ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -298,7 +298,10 @@ details.ip:has(#hint){display:none}
 #top #home svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 #top #home:hover{border-color:var(--neon2,var(--acc));background:color-mix(in srgb,var(--neon2,var(--acc)) 10%,transparent);box-shadow:0 0 14px -3px color-mix(in srgb,var(--neon2,var(--acc)) 65%,transparent)}
 #top #home:focus-visible{outline:2px solid var(--neon2,var(--acc));outline-offset:1px}
-</style></head><body><nav id="top"><a id="home" href="https://ankacha.github.io/" title="Home – ankacha.github.io" aria-label="Home (ankacha.github.io)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><span class="tt">▦ Frame Pusher</span><small style="color:var(--mut);margin-right:8px">v2.11</small></nav>
+
+/* ===== v2.12 Labels control (bottom bar) ===== */
+#lblW{gap:6px}#lblW select{width:auto;padding:2px 22px 2px 7px;font-size:12px}
+</style></head><body><nav id="top"><a id="home" href="https://ankacha.github.io/" title="Home – ankacha.github.io" aria-label="Home (ankacha.github.io)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><span class="tt">▦ Frame Pusher</span><small style="color:var(--mut);margin-right:8px">v2.12</small></nav>
 <aside id="tools"><button id="menuB">☰ Menu</button><div id="menu" hidden><button id="mVer">✓ Verification tests</button><button id="mNew">New / clear canvas</button><button id="mIO">Save / load as text</button><button id="mKeys">Keyboard shortcuts</button><button id="mAbout">About &amp; changelog</button><button id="mMeth">Method &amp; assumptions</button></div><div class="gh" style="margin-top:2px">Example structures</div><select id="pre"><option value="">Load example…</option></select></aside>
 <main><div id="mid"><div id="wrap"><canvas id="cv"></canvas><div id="dock"><div id="dsb"><button id="dsT" title="Scale the on-screen size of the diagrams and loads"><span>⇕ Diagram scale</span><span id="dsA">▾</span></button><div id="dsB"></div></div><div id="info"><button id="infoT">▾ Info panel</button><div id="infoB"><div id="coord"></div><details open class="ip"><summary>Results</summary><div id="read"></div></details><details open class="ip"><summary>Solver status</summary><div id="fea"></div></details><details id="dg"><summary><i class="dot" id="dgDot" style="background:var(--line)"></i> Matrix diagnostics <b id="dgSum"></b></summary><div id="dgBody"></div></details><details open class="ip"><summary>Hint</summary><div id="hint"></div></details></div></div></div><label id="lgT"><input type="checkbox" id="sL" checked>Legend</label><div id="ctb"><button id="undo" title="Undo (Ctrl+Z)">↶ Undo</button><button id="redo" title="Redo (Ctrl+Y)">↷ Redo</button><button id="fit" title="Fit view (F)">⤢ Fit</button><button id="dup" title="Copy the selection (or the whole structure) and paste it into free space">⧉ Duplicate</button><button id="clr">Clear loads</button><button id="theme">◐ Theme</button><label title="Keep a dragged load in place when you let go, instead of it springing back to zero"><input type="checkbox" id="latch">Keep loads on release</label></div><div id="tchip" class="off"></div><div id="pop" hidden></div></div><aside id="side" hidden><div id="sideH"><b>Interrogate member</b><span><button id="sideC" title="Collapse or expand the panel">»</button><button id="sideX" title="Close the panel">✕</button></span></div><div id="sideB"><div id="sideMsg">Select a member to interrogate it.</div><div id="sideMain" hidden><div id="sideSel"></div><div style="margin-top:4px">Position along member (A → B)<input type="range" id="psl" min="0" max="1" step="0.0025" value="0.5"></div><div id="sideCh"></div><details open id="sideSf"><summary>Shape functions &amp; interpolation</summary><div id="pshape"></div></details></div></div></aside></div>
 <div class="bar b">
@@ -308,6 +311,7 @@ details.ip:has(#hint){display:none}
 <div id="skBox"><span>Spring direction</span><select id="skDir"><option value="y">Vertical (kN/m)</option><option value="x">Horizontal (kN/m)</option><option value="r">Rotational (kNm/rad)</option></select><span>Typical ground / support</span><select id="skSoil"><option value="">Choose a stiffness…</option><option value="1000">Very soft clay · 1 000</option><option value="5000">Soft clay, loose sand · 5 000</option><option value="20000">Firm clay, medium sand · 20 000</option><option value="100000">Dense sand, stiff clay · 100 000</option><option value="1000000">Weak rock · 1 000 000</option></select><span>Stiffness k</span><input type="number" id="skK" value="5000" min="0" step="any"></div>
 <div id="eiBox"><span>Stiffness tool applies</span><b id="eiv"></b><button id="eiCh" title="Choose the section, material or reference-member multiplier that the Stiffness tool (E) applies">Change…</button></div>
 <label title="Show the undeformed structure (members, section labels and node dots); untick to see the deflected shape and diagrams on their own"><input type="checkbox" id="sI" checked>Initial structure</label>
+<label id="lblW" title="How many values are written on the canvas: All, Key values (peaks, reactions, loads and the key springs; labels that would overlap move or, if minor, are left out) or None"><span>Labels</span><select id="lblM"><option value="all">All</option><option value="key">Key values</option><option value="none">None</option></select></label>
 <label><input type="checkbox" id="sD" checked><i class="sw" style="--c:#ff7a1a;--a:9px;--b:14px"></i>Deflection</label>
 <label><input type="checkbox" id="sM" checked><i class="sw" style="--c:#3d8bff;--a:24px;--b:24px"></i>Moment</label>
 <label><input type="checkbox" id="sV"><i class="sw" style="--c:#12d98a;--a:9px;--b:13px"></i>Shear</label>
@@ -1731,8 +1735,9 @@ $('mKeys').onclick=()=>{$('menu').hidden=true;showKeys()};
 addEventListener('keydown',e=>{const t=document.activeElement,tg=t&&t.tagName;if(tg=='INPUT'||tg=='SELECT'||tg=='TEXTAREA'||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase(),tk=Object.keys(KEYS).find(x=>KEYS[x]==k);
  if(tk){tool=tk;first=null;if(tk!='sel')sel=null;buildPop();draw();return}if(k=='f'){fit();return}
  if(k.startsWith('arrow')&&sel&&(sel.t=='n'||sel.t=='multi'||sel.t=='a')){e.preventDefault();const d=(e.shiftKey?5:1)*gs,dx=k=='arrowright'?d:k=='arrowleft'?-d:0,dy=k=='arrowup'?d:k=='arrowdown'?-d:0,ns=new Set(sel.t=='n'?[sel.n]:sel.t=='multi'?sel.nodes:[]);if(sel.t=='multi')sel.members.forEach(m=>{ns.add(m.a);ns.add(m.b)});const as=sel.t=='a'?[sel.a]:sel.t=='multi'?[...(sel.anns||[])]:[];pushU();ns.forEach(n=>{n.x=+(n.x+dx).toFixed(6);n.y=+(n.y+dy).toFixed(6)});as.forEach(a=>{a.x1+=dx;a.x2+=dx;a.y1+=dy;a.y2+=dy});draw()}});
-const VER='2.11',VNAME='Ghost';
+const VER='2.12',VNAME='Clear';
 const CHANGELOG=[
+['2.12','Clear',['Point loads: the arrow grows in proportion up to 90 px (3 kN at Diagram scale 1) and only slowly beyond, so a large load no longer draws a line across the whole canvas; the label still gives the true value, and the load is picked along the arrow as drawn.','Labels control in the bottom bar: All, Key values (the default) or None. Every value on the canvas now goes through one placement pass, in priority order (reactions, loads, bending moments, settlement and spring movement, shear and cable force, axial force, spring stiffness, section names): a label that would overlap another tries above, below and beside its point, with a faint leader when it moves; one that still overlaps is left out in Key values if it is a minor one, and kept in All. The δmax labels avoid them too. None hides the values and keeps the section names (they have their own tick box). The choice is remembered in this browser.','Spring supports are one compound symbol: each spring is drawn from its ground anchor to the displaced node (it leans and stretches with the deflected shape, so the v2.11 dashed spring ghost is gone), a rigid restraint in the other direction is a pinned link to a wall or the ground instead of a roller drawn over the spring, and a rotational spring is a small coil whose rotation pointer shows in All mode or when the node is selected. Each spring has one label block (δ and F, δx and Fx, θ and M), only the key springs are labelled – per structure the largest and smallest movement and the two outermost, or all of them if there are three or fewer, in All mode, or when selected or hovered – and a stiffness shared by more than three springs of a structure is given once (k 3,000 · 11 springs). Moving rigid supports are still ghosted, more faintly and only when they move at least 3 px.','Section names are given once for a straight run of members with the same section (a beam split into 12 elements shows one UB label at its middle), and a name longer than its member is left out in Key values.','Report: the deflection, bending moment, shear, axial force and reaction figures show each support as a small grey marker (triangle, bar or small spring); Figure 1 and the loading diagram keep the full symbols.','Report: diagrams are no deeper than 30 % of the median member length and stay within half the gap between separate structures, so a head-to-head diagram no longer runs into its neighbour; axial force is a thin band at most 2.4 mm wide.','Report: the reactions figure gives each supported node one block of values (Rx, Ry, M, with (spr) for the part a spring carries), placed clear of the arrows, the moment arcs and the other blocks, with a leader when it has to move away.','Report: the Output column beside the reactions figure now gives the total vertical reaction at each supported node, spring force included and marked (spring); it showed 0.00 kN at a node on a vertical spring.','Report preview: text is drawn to the exact PDF (Helvetica) widths, so a paragraph can no longer run into the Output column when the browser substitutes a wider font.','Verification: 21 new tests (arrow length, label placement, priority and the three Labels modes, section-name runs, key springs, compound spring symbols, report diagram size, reaction labels and the Output column, preview text widths), 372 in all.']],
 ['2.11','Ghost',['Moving supports are ghosted with the deflected shape: when the deflected shape is shown, every support that moves (a roller sliding along its track, a pin or roller on a spring, a fixed support turning on a rotational spring) is drawn again as a dashed outline at its displaced position, in the deflection colour, so you can see where the support has gone. A spring is ghosted too, dashed from its ground anchor to the displaced node, so it leans and stretches with the deflected shape (the solid spring still shows the compression in its own direction). The ghosts follow the deflection scale and the Animate playback.','Initial structure toggle in the bottom bar: untick it to hide the undeformed members, their section labels and the node dots, leaving the supports, loads and results (deflected shape, diagrams, reactions) on their own. Members can still be picked: hovering or selecting one highlights it.','An unstable structure is now hard to miss: the warning in the Info panel and on the collapsed Info panel button is red, with a throbbing ⚠ icon (the throb stops if the system asks for reduced motion).','Home button (⌂) at the left of the top bar, before the Frame Pusher title, returns to ankacha.github.io (in a new tab when Frame Pusher is running inside another page). The model is autosaved in the browser as before.','README updated for v2.11 (now README.md).']],
 ['2.10','Releases',['Member end releases: each end of a member can now be released (moment-free) on its own, so a joint can be partly pinned. A beam can run continuously over a column with a simple connection, a truss can have continuous chords with pinned webs, and a pinned brace or prop can frame into a rigid portal. A hinge at a node is still there: it releases every member end at the node at once.','Left panel: a new End release tool (Q) under Joints & stiffness, after Hinge. Click a member near one of its ends to release that end or to fix it again; the nearer end is previewed as you hover. Clicking an end at a hinged node fixes that end only and leaves the others released. The Rigid joint tool, and Rigid in the node popup, fix every member end at the node, and the node popup says how many member ends are released there.','Member inspector: each end row has a tick box, Release the moment at end A / B, and says whether the end is released, rigidly joined, or released by a hinge at the node, how many other members are still rigidly connected there, and when a fixed support acts as a pin for the member. The member drawing shows the release.','Drawing: a released end is a small open circle just inside the member, on the canvas, in the example gallery and in the report, and the report lists the released ends after the members table.','Analysis: an end is released when its own flag is set or its node is a hinge, and a released end has its own rotation degree of freedom, as hinges had. The node keeps its own rotation only while at least one moment-carrying member end there is still connected, so releasing n − 1 of the n ends at a joint gives exactly the hinge result. Two inconsistencies of the hinge model are fixed: a moment applied at a hinged node used to go into whichever member was drawn first, and is now reported in the Diagnostics as having nothing to act on (as is a rotational spring there); and a fixed support at a node where every member end is released is now noted as acting as a pin. A mechanism caused by releases names the member and end, and the stiffness-matrix panel labels each released end rotation by its member and end (m3 θB).','Releases are kept by save / open (member field 11; earlier files open with none), undo, copy and paste, split (the outer releases stay with their ends, the new joint is rigid) and join (refused where an inner end is released; the outer releases carry over).','Two new head-to-head examples: a beam over a column with a rigid and a pinned connection, and a truss with pinned joints against one with continuous chords and webs released at both ends.','Verification: 38 new tests (propped cantilever and simply supported beam made by releasing fixed ends against closed form, n − 1 releases against a hinge, a moment at a partly and a fully released joint, a rotational spring at a released node, a mechanism, split, join, save / open, copy and paste, hinge-to-release conversion and the two examples), 342 in all.']],
 ['2.9.1','Inspector',['Member inspector (the side panel, opened from the member popup): it now starts with the member itself, drawn in its true orientation with its depth profile, its end conditions (support, spring, settlement, hinge or rigid joint, and dashed stubs for the members that continue from each end) and every load on it or on its end nodes, with A and B marked. A written list below gives each end’s node, coordinates and condition and each load with its direction and resultant. The results follow under Results along the member.','Section & profile editor in the inspector: set the member’s section directly – reference member × multiplier, British Standard library (series and size), shape calculator (shape and dimensions) or EI and EA – with material, E, fy and bending axis. Changes apply live to this member and can be undone; ▤ Sections & materials still sets several members at once.','Tapered and haunched members can now have a full section at each end, not only a depth: a taper runs from the member’s own section at A to a library size or set of plate dimensions of the same type at B (for example UB 457×191×67 to UB 305×165×40), with every plate varying linearly; a haunch runs from its end section to the member’s section over its length. Uniform, Tapered and Haunched are chosen at the top of the editor, ⇄ swaps the ends, and each end shows its A, I and EI. Generic members keep the depth ratio and section law.','Profiles saved by v2.9 (depth ratios) open unchanged and are shown as end sections when edited; if the member’s section changes type (an I-section to a hollow section, or to a generic member) its ends are converted to keep the same depth ratios. The member popup now shows the profile and a button to the inspector.','Verification: 12 new tests (a taper between two library sizes against direct integration, haunches given as end sections against the compatibility integral, re-expressing a v2.9 profile, changing the section type, splitting an end-section taper, and drawing every member of every example), 304 in all.']],
@@ -1966,7 +1971,39 @@ function solveCore(off){nodes.forEach((n,i)=>n.i=i);let N=nodes.length;const seg
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function head(x,y,dx,dy,c,sz){const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx*sz+dy*sz*.45,y-dy*sz-dx*sz*.45);ctx.lineTo(x-dx*sz-dy*sz*.45,y-dy*sz+dx*sz*.45);ctx.fill()}
 function arrow(x1,y1,x2,y2,c,w=2){OB.push([x1,y1,1],[x2,y2,1],[(x1+x2)/2,(y1+y2)/2,1]);ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(ARD);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);head(x2,y2,x2-x1,y2-y1,c,9)}
-function txt(s,x,y,c){ctx.font='600 12px system-ui,sans-serif';ctx.fillStyle=css('--bg');ctx.globalAlpha=.8;const w=ctx.measureText(s).width;OBR.push([x-2,y-11,x+w+2,y+4,1]);ctx.fillRect(x-2,y-11,w+4,15);ctx.globalAlpha=1;ctx.fillStyle=c;ctx.fillText(s,x,y)}
+function txtNow(s,x,y,c){ctx.font='600 12px system-ui,sans-serif';ctx.fillStyle=css('--bg');ctx.globalAlpha=.8;const w=ctx.measureText(s).width;OBR.push([x-2,y-11,x+w+2,y+4,1]);ctx.fillRect(x-2,y-11,w+4,15);ctx.globalAlpha=1;ctx.fillStyle=c;ctx.fillText(s,x,y)}
+/* ===== v2.12: canvas labels are queued while a frame is drawn and placed together (lblFlush, called from drawLoads after
+   the springs), highest priority first: reactions 6, loads 5, moments 4, settlement and spring movement 3, shear and cable
+   force 2.5, axial 2, spring stiffness 1.5, section names 1. Each label tries its own spot and then nudges above, below and
+   to the side; one that still overlaps is dropped in Key values mode if its priority is below 3 (kept, overlapping, in All).
+   LBL.mode is the bottom-bar Labels choice: 'all', 'key' (default) or 'none' (section names follow their own toggle). */
+const LBL={on:false,q:[],box:[],pri:2,mode:'key'};
+try{const v=localStorage.getItem('fp.labels');if(v=='all'||v=='key'||v=='none')LBL.mode=v}catch(e){}
+function txt(s,x,y,c){if(LBL.on){LBL.q.push({s:String(s),x,y,c,p:LBL.pri});return}txtNow(s,x,y,c)}
+/* pure placement: items {x,y,w,h(=15),p,sec,len}, returns [{o,x,y,b,moved}] in priority order; W, H the canvas size */
+function lblPlace(items,mode,W,H){const B=[],out=[],q=items.slice().sort((a,b)=>b.p-a.p),hit=b=>B.some(r=>b[0]<r[2]&&b[2]>r[0]&&b[1]<r[3]&&b[3]>r[1]);
+ q.forEach(o=>{if(mode=='none'&&!o.sec)return;if(mode!='all'&&out.some(g=>g.o.s===o.s&&Math.hypot(g.o.x-o.x,g.o.y-o.y)<40))return;if(o.sec&&mode!='all'&&o.len!==undefined&&o.w>o.len*.95)return;const w=o.w,T=[[0,0],[0,-15],[0,15],[0,-30],[0,30],[14,0],[-w-14,0],[14,-15],[-w-14,-15],[14,15],[-w-14,15],[0,-45],[0,45]];let got=null;
+  for(const[dx,dy]of T){const b=[o.x+dx-2,o.y+dy-11,o.x+dx+w+2,o.y+dy+4];if(b[0]<2||b[2]>W-2||b[1]<2||b[3]>H-2)continue;if(!hit(b)){got={o,x:o.x+dx,y:o.y+dy,b,moved:dx||dy};break}}
+  if(!got){if(mode=='all'||o.p>=3)got={o,x:o.x,y:o.y,b:[o.x-2,o.y-11,o.x+w+2,o.y+4],moved:0};else return}B.push(got.b);out.push(got)});return out}
+function lblFlush(){LBL.on=false;const q=LBL.q;LBL.q=[];ctx.save();q.forEach(o=>{ctx.font=o.sec?'11px system-ui':'600 12px system-ui,sans-serif';o.w=ctx.measureText(o.s).width});
+ const P=lblPlace(q,LBL.mode,W,H);LBL.box=P.map(g=>g.b);
+ P.forEach(g=>{const o=g.o;if(g.moved&&!o.sec){const cx=Math.max(g.b[0],Math.min(o.x,g.b[2])),cy=Math.max(g.b[1],Math.min(o.y-4,g.b[3]));ctx.save();ctx.strokeStyle=o.c;ctx.globalAlpha=.45;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(o.x,o.y-4);ctx.lineTo(cx,cy);ctx.stroke();ctx.restore()}
+  if(o.sec){ctx.save();ctx.font='11px system-ui';ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle=css('--bg');ctx.strokeText(o.s,g.x,g.y);ctx.fillStyle=css('--mut');ctx.fillText(o.s,g.x,g.y);ctx.restore()}else txtNow(o.s,g.x,g.y,o.c)});ctx.restore()}
+/* v2.12: point-load arrows grow linearly to 90 px (3 kN at Diagram scale 1) and logarithmically beyond, so a large load no
+   longer runs off the canvas; the label still gives the true value */
+function plLen(f){const p=30*Math.abs(f)*DS.L;return p<=90?p:90+28*Math.log(p/90)}
+function plTip(n){const l=n.load,f=Math.hypot(l.fx||0,l.fy||0)||1,d=plLen(f);return[sx(n.x)+(l.fx||0)/f*d,sy(n.y)-(l.fy||0)/f*d]}
+/* v2.12: section names are given once for a straight run of members with the same section (members meeting end to end in
+   line at a node with no other member); the label sits at the middle of the run */
+function secLab(m){const rr=m.EI/EI_REF;return npLab(m,m.sec?m.sec.n:Math.abs(rr-1)>.02?'EI ×'+relS(rr):'')}
+function secRuns(){const R=new Map(),deg=new Map(),P=new Map(),f=x=>{while(P.get(x)!==x)x=P.get(x);return x},st=m=>!m.r&&m.type!='cable';
+ members.forEach(m=>{P.set(m,m);[m.a,m.b].forEach(n=>{if(!deg.has(n))deg.set(n,[]);deg.get(n).push(m)})});
+ deg.forEach((ms,n)=>{if(ms.length!=2)return;const[a,b]=ms,la=secLab(a);if(!la||!st(a)||!st(b)||la!==secLab(b))return;const o1=a.a===n?a.b:a.a,o2=b.a===n?b.b:b.a,ux=o1.x-n.x,uy=o1.y-n.y,vx=o2.x-n.x,vy=o2.y-n.y,l=Math.hypot(ux,uy)*Math.hypot(vx,vy)||1;
+  if(Math.abs((ux*vy-uy*vx)/l)<1e-3&&ux*vx+uy*vy<0){const ra=f(a),rb=f(b);if(ra!==rb)P.set(ra,rb)}});
+ const G=new Map();members.forEach(m=>{const r=f(m);if(!G.has(r))G.set(r,[]);G.get(r).push(m)});
+ G.forEach(g=>{const one=m=>({X:(sx(m.a.x)+sx(m.b.x))/2,Y:(sy(m.a.y)+sy(m.b.y))/2,px:Math.hypot(sx(m.b.x)-sx(m.a.x),sy(m.b.y)-sy(m.a.y))});if(g.length==1){R.set(g[0],Object.assign({show:true,n:1},one(g[0])));return}
+  const c=new Map();g.forEach(m=>[m.a,m.b].forEach(n=>c.set(n,(c.get(n)||0)+1)));const E=[...c].filter(e=>e[1]==1).map(e=>e[0]),A=E[0]||g[0].a,B=E[1]||g[0].b,X=(sx(A.x)+sx(B.x))/2,Y=(sy(A.y)+sy(B.y))/2,px=Math.hypot(sx(B.x)-sx(A.x),sy(B.y)-sy(A.y));
+  let best=g[0],bd=1e18;g.forEach(m=>{const q=one(m),d=Math.hypot(q.X-X,q.Y-Y);if(d<bd){bd=d;best=m}});g.forEach(m=>R.set(m,{show:m===best,X,Y,px,n:g.length}))});return R}
 /* ===== v2.0: spring supports and settlement ===== */
 const RIG=n=>n.sup=='pin'||n.sup=='ry'||n.sup=='fix';
 function normSpr(n){if(n.spr&&!n.spr.x&&!n.spr.y&&!n.spr.r)n.spr=null}
@@ -1993,19 +2030,40 @@ function datum(x,y,dy,c){ctx.save();ctx.strokeStyle=css('--mut');ctx.lineWidth=1
 let SPL=46;
 function comps(){const p=new Map();nodes.forEach(n=>p.set(n,n));const f=x=>{while(p.get(x)!==x){p.set(x,p.get(p.get(x)));x=p.get(x)}return x};members.forEach(m=>{const a=f(m.a),b=f(m.b);if(a!==b)p.set(a,b)});return f}
 function kLab(t,x,y,c){ctx.font='600 12px system-ui,sans-serif';txt(t,x-ctx.measureText(t).width/2,y,c)}
-function drawSpr(){const ok=!!(res&&res.ok),u=ok?res.u:null,ds=dscale(),show=$('sSt').checked,col=css('--neon2'),mut=css('--mut'),acc=css('--acc'),st=[];
- /* the drawn settlement is magnified, so the unloaded spring is drawn long enough to stay visibly compressed at full scale */
+/* ===== v2.12: a spring support is one compound symbol – each spring drawn from its ground anchor to the displaced node (so it
+   leans and stretches with the deflected shape), a pinned link to a wall or the ground for a rigid restraint in the other
+   direction, and a small coil for a rotational spring – with one label block. support() leaves these nodes to drawSpr. Only
+   the key springs are labelled (sprKeys: per structure, the largest and smallest movement and the two outermost; all of them
+   when there are three or fewer, in All mode, or for a selected or hovered node), and a stiffness shared by every spring of a
+   structure with more than three is given once. */
+function sprSym(n){const sp=n.spr;return!!sp&&((sp.y>0&&!RIG(n))||(sp.x>0&&n.sup!='pin'&&n.sup!='rx'&&n.sup!='fix'))}
+function sprKeys(){const K=new Set(),u=res&&res.ok?res.u:null,cf=comps(),G=new Map(),all=LBL.mode=='all';
+ nodes.forEach(n=>{if(!n.spr||n.i===undefined)return;const r=cf(n);if(!G.has(r))G.set(r,[]);G.get(r).push(n)});
+ const d=n=>u?Math.hypot(u[3*n.i],u[3*n.i+1])+Math.abs(u[3*n.i+2])*1e-3:0;
+ G.forEach(g=>{if(all||g.length<=3){g.forEach(n=>K.add(n));return}let a=g[0],b=g[0],l=g[0],r=g[0];g.forEach(n=>{if(d(n)>d(a))a=n;if(d(n)<d(b))b=n;if(n.x<l.x||(n.x==l.x&&n.y<l.y))l=n;if(n.x>r.x||(n.x==r.x&&n.y>r.y))r=n});[a,b,l,r].forEach(n=>K.add(n))});
+ if(sel&&sel.t=='n'&&sel.n.spr)K.add(sel.n);try{const h=hovTarget();if(h&&h.n&&h.n.spr)K.add(h.n)}catch(e){}return{K,G}}
+function sprLink(x,y,bx,by,vert,c){ctx.save();ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(bx,by);ctx.stroke();ctx.fillStyle=css('--panel');
+ [[x,y],[bx,by]].forEach(([X,Y])=>{ctx.beginPath();ctx.arc(X,Y,3,0,7);ctx.fill();ctx.stroke()});ctx.lineWidth=1.5;ctx.beginPath();
+ if(vert){ctx.moveTo(bx-11,by+3.5);ctx.lineTo(bx+11,by+3.5);for(let k=-11;k<9;k+=5){ctx.moveTo(bx+k+5,by+3.5);ctx.lineTo(bx+k,by+8.5)}}
+ else{ctx.moveTo(bx-3.5,by-11);ctx.lineTo(bx-3.5,by+11);for(let k=-11;k<9;k+=5){ctx.moveTo(bx-3.5,by+k);ctx.lineTo(bx-8.5,by+k+5)}}ctx.stroke();ctx.restore()}
+function drawSpr(){const ok=!!(res&&res.ok),u=ok?res.u:null,ds=dscale(),show=$('sSt').checked&&LBL.mode!='none',col=css('--neon2'),mut=css('--mut'),acc=css('--acc'),ink=css('--mem'),st=[];
  const cf=comps(),LV=new Map(),LX=new Map();if(u)nodes.forEach(n=>{if(n.spr&&n.i!==undefined){const r=cf(n);LV.set(r,Math.max(LV.get(r)||46,-u[3*n.i+1]*ds*S+22));LX.set(r,Math.max(LX.get(r)||46,-u[3*n.i]*ds*S+22))}});SPL=Math.max(46,...LV.values());
- nodes.forEach(n=>{const sp=n.spr,i=n.i,x0=sx(n.x),y0=sy(n.y),ux=u&&i!==undefined?u[3*i]:0,uy=u&&i!==undefined?u[3*i+1]:0,th=u&&i!==undefined?u[3*i+2]:0,o=ok&&res.SP?res.SP.find(q=>q.n===n):null;
-  if(sp&&sp.y>0&&!RIG(n)){const dy=-uy*ds*S,ay=y0+(LV.get(cf(n))||46);gnd(x0,ay,false);zig(x0,y0+dy,x0,ay,6,7,col,2);ctx.save();ctx.fillStyle=col;ctx.beginPath();ctx.arc(x0,y0+dy,3.5,0,7);ctx.fill();ctx.restore();
-   if(show){if(Math.abs(dy)>=2)datum(x0,y0,dy,col);if(o&&Math.abs(uy)>1e-12){txt('δ = '+fmtD(uy)+(uy<0?' ↓':' ↑'),x0+36,y0+dy/2+4,col);txt('F = '+Math.abs(o.fy).toFixed(1)+' kN',x0+36,y0+dy/2+19,mut)}kLab('k = '+fmtK(sp.y),x0,ay+22,mut)}
-   if(ok)st.push({n,d:-uy})}
-  if(sp&&sp.x>0&&n.sup!='pin'&&n.sup!='rx'&&n.sup!='fix'){const dx=ux*ds*S,ax=x0-(LX.get(cf(n))||46);gnd(ax,y0,true);zig(x0+dx,y0,ax,y0,6,7,col,2);ctx.save();ctx.fillStyle=col;ctx.beginPath();ctx.arc(x0+dx,y0,3.5,0,7);ctx.fill();ctx.restore();
-   if(show){if(o&&Math.abs(ux)>1e-12)txt('δx = '+fmtD(ux)+(ux>0?' →':' ←'),x0-90,y0-14,col);kLab('k = '+fmtK(sp.x),ax,y0+30,mut)}}
-  if(sp&&sp.r>0&&!n.hinge&&n.sup!='fix'){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();for(let t=0;t<=1.001;t+=.02){const a=t*5*Math.PI,r=8+12*t,X=x0+r*Math.cos(a),Y=y0+r*Math.sin(a);t?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.stroke();
-   const ang=-th*ds;ctx.setLineDash([3,3]);ctx.strokeStyle=mut;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0+30,y0);ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0+30*Math.cos(ang),y0+30*Math.sin(ang));ctx.stroke();ctx.restore();
-   if(show){if(o&&Math.abs(th)>1e-12)txt('θ = '+(Math.abs(th)*1000).toFixed(Math.abs(th)<.01?2:1)+' mrad '+(th<0?'↻':'↺'),x0+34,y0-18,col);txt('kθ = '+fmtK(sp.r),x0+34,y0+28,mut)}}
-  if(n.sd&&RIG(n)){const v=ok&&u?uy:-n.sd,dy=-v*ds*S;if(Math.abs(dy)>=2){support(n,dy,acc);if(show)datum(x0,y0,dy,acc)}if(show)txt('settles '+fmtD(n.sd)+(n.sd>0?' ↓':' ↑'),x0+36,y0+(Math.abs(dy)>=2?dy/2:0)+4,acc);if(ok)st.push({n,d:n.sd})}});
+ const{K,G}=sprKeys(),one=new Map(),sig=n=>[n.spr.x||0,n.spr.y||0,n.spr.r||0].join('/');
+ if(LBL.mode!='all')G.forEach(g=>{const S2=new Map();g.forEach(n=>{const k=sig(n);if(!S2.has(k))S2.set(k,[]);S2.get(k).push(n)});S2.forEach(h=>{if(h.length<=3)return;const mx=h.reduce((t,n)=>t+n.x,0)/h.length;let c=h[0];h.forEach(n=>{if(Math.abs(n.x-mx)<Math.abs(c.x-mx))c=n});h.forEach(n=>one.set(n,c===n?h.length:0))})});
+ const kTxt=sp=>[sp.x>0?'kx '+fmtK(sp.x):'',sp.y>0?'k '+fmtK(sp.y):'',sp.r>0?'kθ '+fmtK(sp.r):''].filter(Boolean).join(' · ');
+ nodes.forEach(n=>{const sp=n.spr,i=n.i,has=!!u&&i!==undefined,x0=sx(n.x),y0=sy(n.y),ux=has?u[3*i]:0,uy=has?u[3*i+1]:0,th=has?u[3*i+2]:0,o=ok&&res.SP?res.SP.find(q=>q.n===n):null,
+  dx=ux*ds*S,dy=-uy*ds*S,X=x0+dx,Y=y0+dy,key=K.has(n),L=[];let kx=x0,ky=y0+34;
+  if(sp&&sp.y>0&&!RIG(n)){const ay=y0+(LV.get(cf(n))||46);gnd(x0,ay,false);zig(X,Y,x0,ay,6,7,col,2);ky=ay+22;
+   if(show&&key&&Math.abs(dy)>=2)datum(x0,y0,dy,col);if(o&&Math.abs(uy)>1e-12)L.push('δ '+fmtD(uy)+(uy<0?' ↓':' ↑')+' · F '+Math.abs(o.fy).toFixed(1)+' kN');if(ok)st.push({n,d:-uy})}
+  if(sp&&sp.x>0&&n.sup!='pin'&&n.sup!='rx'&&n.sup!='fix'){const ax=x0-(LX.get(cf(n))||46);gnd(ax,y0,true);zig(X,Y,ax,y0,6,7,col,2);if(!(sp.y>0&&!RIG(n))){kx=ax;ky=y0+34}
+   if(o&&Math.abs(ux)>1e-12)L.push('δx '+fmtD(ux)+(ux>0?' →':' ←')+' · Fx '+Math.abs(o.fx).toFixed(1)+' kN')}
+  if(sprSym(n)){if(n.sup=='rx')sprLink(X,Y,X-28,Y,false,ink);else if(n.sup=='ry')sprLink(X,Y,X,Y+28,true,ink);ctx.save();ctx.fillStyle=col;ctx.beginPath();ctx.arc(X,Y,3.5,0,7);ctx.fill();ctx.restore()}
+  if(sp&&sp.r>0&&!n.hinge&&n.sup!='fix'){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=1.8;ctx.beginPath();for(let t=0;t<=1.001;t+=.025){const a=t*4*Math.PI,r=5+7*t,PX=X+r*Math.cos(a),PY=Y+r*Math.sin(a);t?ctx.lineTo(PX,PY):ctx.moveTo(PX,PY)}ctx.stroke();
+   if(LBL.mode=='all'||(sel&&sel.t=='n'&&sel.n===n)){const ang=-th*ds;ctx.setLineDash([3,3]);ctx.strokeStyle=mut;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X+30,Y);ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X+30*Math.cos(ang),Y+30*Math.sin(ang));ctx.stroke()}ctx.restore();
+   if(o&&Math.abs(th)>1e-12)L.push('θ '+(Math.abs(th)*1000).toFixed(Math.abs(th)<.01?2:1)+' mrad '+(th<0?'↻':'↺')+(o.m?' · M '+Math.abs(o.m).toFixed(1)+' kNm':''))}
+  if(sp&&show){LBL.pri=3;if(key)L.forEach((t,j)=>txt(t,x0+20,y0+Math.max(dy,0)/2+4+j*15,col));
+   const kt=kTxt(sp),on=one.get(n);LBL.pri=1.5;if(kt&&(on===undefined?key:on>0)){const s2=kt+(on>0?' · '+on+' springs':'');ctx.font='600 12px system-ui,sans-serif';txt(s2,kx-ctx.measureText(s2).width/2,ky+(on>0?14:0),mut)}}
+  if(n.sd&&RIG(n)){LBL.pri=3;const v=ok&&u?uy:-n.sd,dy=-v*ds*S;if(Math.abs(dy)>=2){support(n,dy,acc);if(show)datum(x0,y0,dy,acc)}if(show)txt('settles '+fmtD(n.sd)+(n.sd>0?' ↓':' ↑'),x0+36,y0+(Math.abs(dy)>=2?dy/2:0)+4,acc);if(ok)st.push({n,d:n.sd})}});
  const rd=$('read');if(ok&&st.length&&rd){const nm=n=>hmNodeName(nodes.indexOf(n)),G=new Map();st.forEach(q=>{const r=cf(q.n);if(!G.has(r))G.set(r,[]);G.get(r).push(q)});const gs=[...G.values()].sort((a,b)=>Math.min(...a.map(q=>q.n.x))-Math.min(...b.map(q=>q.n.x))),parts=[];
   gs.forEach((g,k)=>{let mx=g[0],mn=g[0];g.forEach(q=>{if(q.d>mx.d)mx=q;if(q.d<mn.d)mn=q});if(Math.abs(mx.d)<1e-9&&Math.abs(mn.d)<1e-9)return;parts.push((gs.length>1?'Structure '+(k+1)+': ':'')+'max '+fmtD(mx.d)+(mx.d<0?' (heave)':'')+' at '+nm(mx.n)+(g.length>1?' · min '+fmtD(mn.d)+' at '+nm(mn.n)+' · differential '+fmtD(mx.d-mn.d):''))});
   if(parts.length)rd.innerHTML+=' <br><span style="color:'+col+'">Settlement: '+parts.join(' | ')+'</span>'}
@@ -2018,7 +2076,7 @@ function sprPop(pp,n,add){const hd=document.createElement('div');hd.className='r
 /* v2.2: the wall goes on the side away from the members framing into the node, snapped to the nearest quarter turn (default: ground below) */
 function fixAng(n){let vx=0,vy=0;members.forEach(m=>{const o=m.a===n?m.b:m.b===n?m.a:null;if(!o)return;const dx=sx(o.x)-sx(n.x),dy=sy(o.y)-sy(n.y),l=Math.hypot(dx,dy)||1;vx+=dx/l;vy+=dy/l});
  if(Math.hypot(vx,vy)<1e-6)return 0;const wx=-vx,wy=-vy;return Math.abs(wy)>=Math.abs(wx)?(wy>0?0:Math.PI):(wx<0?Math.PI/2:-Math.PI/2)}
-function support(n,oy,col){const x=sx(n.x),y=sy(n.y)+(oy||0),ink=col||css('--mem');ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.save();ctx.translate(x,y);
+function support(n,oy,col){if(oy===undefined&&!col&&sprSym(n))return;const x=sx(n.x),y=sy(n.y)+(oy||0),ink=col||css('--mem');ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.save();ctx.translate(x,y);
  if(n.sup=='rx')ctx.rotate(Math.PI/2);
  if(n.sup=='pin'||n.sup=='ry'||n.sup=='rx'){ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-11,18);ctx.lineTo(11,18);ctx.closePath();ctx.stroke();
   const gy=n.sup=='pin'?18:24;if(n.sup!='pin'){ctx.beginPath();ctx.moveTo(-2,21);ctx.arc(-5,21,3,0,2*Math.PI);ctx.moveTo(8,21);ctx.arc(5,21,3,0,2*Math.PI);ctx.stroke()}
@@ -2029,7 +2087,7 @@ function support(n,oy,col){const x=sx(n.x),y=sy(n.y)+(oy||0),ink=col||css('--mem
  ctx.restore()}
 function draw(){if(!W)return;OB=[];OBR=[];sync();ctx.clearRect(0,0,W,H);
  /* v2.11: the Initial structure toggle (bottom bar) hides the undeformed members, their labels and the node dots; supports, loads and results stay */
- const SI=!$('sI')||$('sI').checked;
+ const SI=!$('sI')||$('sI').checked;LBL.on=true;LBL.q=[];const SR=secRuns();
  {const t=22/S,b=Math.pow(10,Math.floor(Math.log10(t)));gs=[1,2,5,10].map(k=>k*b).find(v=>v>=t);const x0=Math.floor(mx(0)/gs),x1=Math.ceil(mx(W)/gs),y0=Math.floor(my(H)/gs),y1=Math.ceil(my(0)/gs);
  for(let pass=0;pass<2;pass++){ctx.strokeStyle=css('--grid');ctx.globalAlpha=pass?1:.6;ctx.lineWidth=1;ctx.beginPath();
   for(let i=x0;i<=x1;i++)if((i%5==0)==!!pass){const X=Math.round(sx(i*gs))+.5;ctx.moveTo(X,0);ctx.lineTo(X,H)}
@@ -2039,7 +2097,7 @@ function draw(){if(!W)return;OB=[];OBR=[];sync();ctx.clearRect(0,0,W,H);
  const HV=hovTarget(),hc=css('--neon2')||css('--acc'),mpath=m=>{ctx.beginPath();mpts(m).forEach((q,i)=>i?ctx.lineTo(sx(q.x),sy(q.y)):ctx.moveTo(sx(q.x),sy(q.y)))};
  if(HV&&HV.m){ctx.save();ctx.strokeStyle=hc;ctx.lineCap='round';ctx.globalAlpha=.22;ctx.lineWidth=24;mpath(HV.m);ctx.stroke();ctx.globalAlpha=.45;ctx.lineWidth=13;mpath(HV.m);ctx.stroke();ctx.restore()}
  members.forEach(m=>{if(!SI)return;const cb=m.type=='cable';ctx.strokeStyle=cb?'#a16207':mem;ctx.lineWidth=cb?Math.max(1.2,1.5+Math.log10(m.EI/EIm())):Math.max(1.5,4+2.5*Math.log10(m.EI/EIm()));ctx.setLineDash(cb?[7,4]:[]);ctx.lineCap='round';if(m.np&&!cb)npDraw(m,ctx.strokeStyle,ctx.lineWidth);else{ctx.beginPath();mpts(m).forEach((q,i)=>i?ctx.lineTo(sx(q.x),sy(q.y)):ctx.moveTo(sx(q.x),sy(q.y)));ctx.stroke()}ctx.setLineDash([]);
-  const rr=m.EI/EI_REF,lt=npLab(m,m.sec?m.sec.n:Math.abs(rr-1)>.02?'EI ×'+relS(rr):'');if(lt&&$('sS').checked){const X=(sx(m.a.x)+sx(m.b.x))/2+8,Y=(sy(m.a.y)+sy(m.b.y))/2-8;ctx.save();ctx.font='11px system-ui';ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle=css('--bg');ctx.strokeText(lt,X,Y);ctx.fillStyle=css('--mut');ctx.fillText(lt,X,Y);ctx.restore()}});
+  const lt=secLab(m),sr=SR.get(m);if(lt&&$('sS').checked&&sr&&sr.show)LBL.q.push({s:lt,x:sr.X+8,y:sr.Y-8,p:1,sec:1,len:sr.px})});
  if(HV&&HV.m){const m=HV.m;ctx.save();ctx.strokeStyle=hc;ctx.lineCap='round';ctx.setLineDash(m.type=='cable'?[7,4]:[]);ctx.lineWidth=m.type=='cable'?2.5:Math.max(3,4.5+2.5*Math.log10(m.EI/EIm()));mpath(m);ctx.stroke();ctx.restore()}
  const hv=HV&&HV.n;nodes.forEach(n=>{support(n);const hl=n===first;if(!SI&&!hl)return;ctx.fillStyle=hl?css('--acc'):n.hinge?css('--panel'):mem;ctx.strokeStyle=hl?css('--acc'):mem;ctx.lineWidth=n.hinge?2.5:2;ctx.beginPath();ctx.arc(sx(n.x),sy(n.y),n.hinge?6.5:5,0,7);ctx.fill();ctx.stroke()});
  if(hv){const X=sx(hv.x),Y=sy(hv.y);ctx.save();ctx.fillStyle=hc;ctx.globalAlpha=.25;ctx.beginPath();ctx.arc(X,Y,16,0,7);ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=hc;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(X,Y,11,0,7);ctx.stroke();ctx.fillStyle=hc;ctx.beginPath();ctx.arc(X,Y,5,0,7);ctx.fill();ctx.restore()}
@@ -2052,7 +2110,7 @@ function draw(){if(!W)return;OB=[];OBR=[];sync();ctx.clearRect(0,0,W,H);
  if(!loaded){rd.textContent='No load applied';drawLoads();return}
  const col={D:'#ff7a1a',M:'#3d8bff',V:'#12d98a',R:'#ff3d5a',A:'#00c2d1'};
  rd.innerHTML=`<span style="color:${col.M}">Max |M| ${res.mM.toFixed(2)}</span> · <span style="color:${col.V}">Max |V| ${res.mV.toFixed(2)}</span> · <span style="color:${col.A}">Max |N| ${res.mN.toFixed(2)}</span>`;
- const diag=(key,sc,sgn,c)=>{const lab=new Map();res.els.forEach(el=>{const ax=sx(el.p.x),ay=sy(el.p.y),ux=el.c,uy=-el.s,nx=-el.s*1,ny=-el.c;
+ const diag=(key,sc,sgn,c)=>{LBL.pri=key=='M'?4:key=='V'?2.5:2;const lab=new Map();res.els.forEach(el=>{const ax=sx(el.p.x),ay=sy(el.p.y),ux=el.c,uy=-el.s,nx=-el.s*1,ny=-el.c;
   const P=el.pts.map(q=>[ax+ux*q.x*S+nx*sgn*q[key]*sc,ay+uy*q.x*S+ny*sgn*q[key]*sc]);P.forEach((p,i)=>{const q=el.pts[i],bx=ax+ux*q.x*S,by=ay+uy*q.x*S;OB.push([p[0],p[1],1],[(p[0]+bx)/2,(p[1]+by)/2,.5])});
   ctx.beginPath();ctx.moveTo(ax,ay);P.forEach(p=>ctx.lineTo(p[0],p[1]));ctx.lineTo(sx(el.q.x),sy(el.q.y));ctx.closePath();ctx.fillStyle=c+'33';ctx.fill();
   ctx.beginPath();P.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.strokeStyle=c;ctx.lineWidth=2.5;ctx.setLineDash(key=='V'?[10,4,2,4]:key=='N'?[2,4]:[]);ctx.lineCap=key=='N'?'round':'butt';ctx.stroke();ctx.setLineDash([]);ctx.lineCap='butt';
@@ -2064,31 +2122,31 @@ function draw(){if(!W)return;OB=[];OBR=[];sync();ctx.clearRect(0,0,W,H);
  if($('sD').checked&&res.mD>1e-12){const ds=AF('D')*DS.D*DM.k/S;ctx.strokeStyle=col.D;ctx.lineWidth=3;ctx.lineJoin='round';ctx.setLineDash([10,5]);
   res.els.forEach(el=>{ctx.beginPath();el.pts.forEach((q,i)=>{const dxl=q.u,dyl=q.v,gx=el.c*dxl-el.s*dyl,gy=el.s*dxl+el.c*dyl,X=sx(el.p.x+el.c*q.x+gx*ds),Y=sy(el.p.y+el.s*q.x+gy*ds);OB.push([X,Y,1]);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.stroke()});ctx.setLineDash([]);peakDefl(ds)}
  if(interr&&sel&&sel.t=='m'&&res.ok)drawMarker();
- if($('sR').checked){const mr=Math.max(...res.R.map(o=>Math.max(Math.abs(o.r[0]),Math.abs(o.r[1]))),1e-9),e=1e-3*mr,rs=AF('R')*soft(mr,25*DS.R,130*DS.R);
+ if($('sR').checked){LBL.pri=6;const mr=Math.max(...res.R.map(o=>Math.max(Math.abs(o.r[0]),Math.abs(o.r[1]))),1e-9),e=1e-3*mr,rs=AF('R')*soft(mr,25*DS.R,130*DS.R);
   ARD=[7,4];res.R.forEach(({n,r})=>{const x=sx(n.x),y=sy(n.y),L0=Math.abs(r[0])*rs,L1=Math.abs(r[1])*rs;
    if(Math.abs(r[0])>e){const d=Math.sign(r[0]);arrow(x-d*L0,y,x,y,col.R,3);txt(r[0].toFixed(2),x-d*L0-(d>0?34:-4),y-6,col.R)}
    if(Math.abs(r[1])>e){const d=Math.sign(r[1]);arrow(x,y+d*L1,x,y,col.R,3);txt(r[1].toFixed(2),x+8,y+d*L1+(d>0?4:12),col.R)}
    if(n.sup=='fix'&&Math.abs(r[2])>e){const rad=12+30*Math.tanh(Math.abs(r[2])/4),a=.25*Math.PI,ccw=r[2]>0,en=ccw?a-1.5*Math.PI:a+1.5*Math.PI;ctx.strokeStyle=col.R;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,rad,a,en,ccw);ctx.stroke();
     const tx=ccw?Math.sin(en):-Math.sin(en),ty=ccw?-Math.cos(en):Math.cos(en);head(x+rad*Math.cos(en),y+rad*Math.sin(en),tx,ty,col.R,9);txt('M '+r[2].toFixed(2),x+rad*.8,y-rad-4,col.R)}});ARD=[]}
- res.els.forEach(el=>{if(el.m.type!='cable')return;txt(el.off?'slack':'T '+el.N.toFixed(2),sx((el.p.x+el.q.x)/2)+6,sy((el.p.y+el.q.y)/2)-6,'#a16207')});drawLoads()}
+ LBL.pri=2.5;res.els.forEach(el=>{if(el.m.type!='cable')return;txt(el.off?'slack':'T '+el.N.toFixed(2),sx((el.p.x+el.q.x)/2)+6,sy((el.p.y+el.q.y)/2)-6,'#a16207')});drawLoads()}
 const soft=(v,g,c)=>v>1e-12?c*Math.tanh(g*v/c)/v:0;
 function momArc(x,y,m,c,r){const a=.25*Math.PI,ccw=m>0,en=ccw?a-1.5*Math.PI:a+1.5*Math.PI;ctx.strokeStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,r,a,en,ccw);ctx.stroke();head(x+r*Math.cos(en),y+r*Math.sin(en),ccw?Math.sin(en):-Math.sin(en),ccw?-Math.cos(en):Math.cos(en),c,9)}
-function drawLoads(){drawLoads0();drawSpr();drawAnn();drawPk();hmDraw();popPlace()}
+function drawLoads(){drawLoads0();drawSpr();lblFlush();drawAnn();drawPk();hmDraw();popPlace()}
 /* peak-deflection labels: drawn after the loads, as pills, in the free spot nearest the peak */
-function drawPk(){const q=PKQ;PKQ=[];if(!q.length)return;const R=[],pad=6,bx=(a,b,c,d)=>R.push([Math.min(a,c)-pad,Math.min(b,d)-pad,Math.max(a,c)+pad,Math.max(b,d)+pad]);
- nodes.forEach(n=>{const l=n.load;if(!l)return;const x=sx(n.x),y=sy(n.y);if(l.fx||l.fy)bx(x,y,x+l.fx*30*DS.L,y-l.fy*30*DS.L);if(l.m)bx(x-34,y-34,x+34,y+34)});
+function drawPk(){const q=PKQ;PKQ=[];if(!q.length||LBL.mode=='none')return;const R=[],pad=6,bx=(a,b,c,d)=>R.push([Math.min(a,c)-pad,Math.min(b,d)-pad,Math.max(a,c)+pad,Math.max(b,d)+pad]);
+ nodes.forEach(n=>{const l=n.load;if(!l)return;const x=sx(n.x),y=sy(n.y);if(l.fx||l.fy){const t=plTip(n);bx(x,y,t[0],t[1])}if(l.m)bx(x-34,y-34,x+34,y+34)});
  members.forEach(m=>{const w=m.w||m.we||0;if(!w)return;const dx=m.b.x-m.a.x,dy=m.b.y-m.a.y,Lm=Math.hypot(dx,dy)||1,s=Math.sign(w),len=DS.L*Math.min(95,Math.abs(Math.max(Math.abs(m.w||0),Math.abs(m.we||0)))*30),ux=-dy/Lm*s*len,uy=-dx/Lm*s*len,x0=sx(m.a.x),y0=sy(m.a.y),x1=sx(m.b.x),y1=sy(m.b.y);bx(Math.min(x0,x1,x0+ux,x1+ux),Math.min(y0,y1,y0+uy,y1+uy),Math.max(x0,x1,x0+ux,x1+ux),Math.max(y0,y1,y0+uy,y1+uy))});
  if(res&&res.R&&$('sR').checked)res.R.forEach(({n})=>bx(sx(n.x)-46,sy(n.y)-140,sx(n.x)+46,sy(n.y)+140));
  nodes.forEach(n=>{if(n.spr||(n.sd&&RIG(n))){const x=sx(n.x),y=sy(n.y);bx(x-50,y-10,x+110,y+SPL+34)}});
- try{ann.forEach(a=>{const b=annBox(a);bx(b[0],b[1],b[0]+b[2],b[1]+b[3])})}catch(e){}
+ LBL.box.forEach(b=>R.push(b));try{ann.forEach(a=>{const b=annBox(a);bx(b[0],b[1],b[0]+b[2],b[1]+b[3])})}catch(e){}
  ctx.save();q.forEach(o=>{ctx.font='700 12px system-ui,sans-serif';const w1=ctx.measureText(o.a).width;ctx.font='500 11px system-ui,sans-serif';const w=Math.max(w1,ctx.measureText(o.b).width)+16,h=36,X=o.X,Y=o.Y,
   C=[[14,8],[14,-h-8],[-w-14,8],[-w-14,-h-8],[-w/2,16],[-w/2,-h-16],[14,-h/2],[-w-14,-h/2],[30,30],[30,-h-30],[-w-30,30],[-w-30,-h-30],[-w/2,40],[-w/2,-h-40],[14,60],[-w-14,60],[-w/2,64],[14,90],[-w-14,90],[-w/2,96],[60,-h-60],[-w-60,-h-60]];let best=null;
   C.forEach(([dx,dy],i)=>{const x0=X+dx,y0=Y+dy,x1=x0+w,y1=y0+h;let s=i*.01;if(x0<4||y0<4||x1>W-4||y1>H-4)s+=1e3;R.forEach(r=>{if(x0<r[2]&&x1>r[0]&&y0<r[3]&&y1>r[1])s+=10});if(!best||s<best.s)best={s,x0,y0,x1,y1}});
   const{x0,y0,x1,y1}=best;ctx.setLineDash([]);ctx.strokeStyle=o.col;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(Math.max(x0,Math.min(X,x1)),Math.max(y0,Math.min(Y,y1)));ctx.stroke();
   ctx.fillStyle=css('--panel');ctx.globalAlpha=.94;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x0,y0,w,h,7);else ctx.rect(x0,y0,w,h);ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=o.col;ctx.lineWidth=1.5;ctx.stroke();
   ctx.fillStyle=css('--ink');ctx.font='700 12px system-ui,sans-serif';ctx.fillText(o.a,x0+8,y0+15);ctx.fillStyle=css('--mut');ctx.font='500 11px system-ui,sans-serif';ctx.fillText(o.b,x0+8,y0+29);R.push([x0,y0,x1,y1])});ctx.restore()}
-function drawLoads0(){place();const c='#ff2bd6';
- nodes.forEach(n=>{const l=n.load;if(!l)return;const x=sx(n.x),y=sy(n.y);if(l.fx||l.fy){const ex=x+l.fx*30*DS.L,ey=y-l.fy*30*DS.L;arrow(x,y,ex,ey,c,3);txt(Math.hypot(l.fx,l.fy).toFixed(2)+' kN',ex+6,ey-6,c)}if(l.m){momArc(x,y,l.m,c,30);txt(Math.abs(l.m).toFixed(2)+' kNm',x+22,y-30,c)}});
+function drawLoads0(){place();LBL.pri=5;const c='#ff2bd6';
+ nodes.forEach(n=>{const l=n.load;if(!l)return;const x=sx(n.x),y=sy(n.y);if(l.fx||l.fy){const[ex,ey]=plTip(n);arrow(x,y,ex,ey,c,3);txt(Math.hypot(l.fx,l.fy).toFixed(2)+' kN',ex+6,ey-6,c)}if(l.m){momArc(x,y,l.m,c,30);txt(Math.abs(l.m).toFixed(2)+' kNm',x+22,y-30,c)}});
  members.forEach(vudlDraw);members.forEach(m=>{if(!m.w||m.we!==undefined)return;const dx=m.b.x-m.a.x,dy=m.b.y-m.a.y,L=Math.hypot(dx,dy),[nx,ny]=ldU(m,m.a,m.b,L,Math.sign(m.w)),len=DS.L*Math.min(95,Math.abs(m.w)*30),k=Math.max(3,Math.round(L*S/36));
   for(let i=0;i<=k;i++){const t=i/k,q=arcP(m,t),q2=arcP(m,Math.min(1,t+.01)),q1=arcP(m,Math.max(0,t-.01)),tl=Math.hypot(q2.x-q1.x,q2.y-q1.y)||1,[ux,uy]=ldU(m,q1,q2,tl,Math.sign(m.w)),x=sx(q.x),y=sy(q.y);arrow(x,y,x+ux*len,y-uy*len,c,2)}
   txt(Math.abs(m.w).toFixed(2)+' kN/m'+ldTag(m),sx(m.a.x+dx/2)+nx*len+6,sy(m.a.y+dy/2)-ny*len-6,c)})}
@@ -2442,6 +2500,86 @@ function rpOpen(fromOv){if(!RP.dlP)RP.dlP=(window.claude&&window.claude.use)?Pro
  d.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')||'dark');d.body.style.cssText='margin:0;display:block;height:100vh;overflow:hidden';
  RP.win=w;rpBuild(d,d.body,true);w.addEventListener('pagehide',()=>{if(RP.win===w){RP.win=null;if(!RP.host)RP.doc=null}});try{w.focus()}catch(e){}}
 addEventListener('beforeunload',()=>{if(RP.win)try{RP.win.close()}catch(e){}});
+
+/* ===== v2.12 "Clear": report decluttering =====
+   Loaded straight after js/13-report.js. The function declarations below replace js/13's rpStructure, rpFigure, rpDiag,
+   rpReac and rpSVG (the last declaration of a name wins in the one shared script); rpBlocks is wrapped so that the Output
+   column beside the reactions figure gives the total vertical reaction at each supported node, springs included.
+   - rpSupMark: on the deflection, diagram and reaction figures a support is a small grey marker (rpStructure with o.simple);
+     Figure 1 and the loading figure keep the full rpSupport symbols.
+   - rpAmp / rpGap: diagram amplitude limited to 30 % of the median member length and half the gap between separate
+     structures (less 1.5 mm); axial force at most 2.4 mm, a thin band.
+   - rpReac / rpBlock: one value block per supported node (rigid and spring parts together, (spr) marks a spring part),
+     placed clear of the arrows, the moment arcs and the other blocks; the reactions figure has 32 mm below for them.
+   - rpSVG: the preview's text is set to the PDF (Helvetica) widths with textLength, so it wraps as the PDF does. */
+function rpSVG(pg,wpx){let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 297" width="'+wpx+'" height="'+(wpx*297/210)+'" style="background:#fff"><rect width="210" height="297" fill="#fff"/>';
+ pg.it.forEach(o=>{if(o.t=='l')s+='<line x1="'+o.x1.toFixed(2)+'" y1="'+o.y1.toFixed(2)+'" x2="'+o.x2.toFixed(2)+'" y2="'+o.y2.toFixed(2)+'" stroke="'+o.c+'" stroke-width="'+o.w+'"'+(o.d?' stroke-dasharray="'+o.d.join(' ')+'"':'')+'/>';
+  else if(o.t=='p'){const d=o.pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(2)+' '+p[1].toFixed(2)).join('')+(o.cl?'Z':'');s+='<path d="'+d+'" fill="'+(o.fill||'none')+'" stroke="'+(o.st||'none')+'" stroke-width="'+(o.w||.2)+'" stroke-linejoin="round"'+(o.d?' stroke-dasharray="'+o.d.join(' ')+'"':'')+'/>'}
+  else if(o.t=='t'){const fs=(o.pt*RPK).toFixed(3),an=o.a=='c'?'middle':o.a=='r'?'end':'start';s+='<text x="'+o.x.toFixed(2)+'" y="'+o.y.toFixed(2)+'" font-size="'+fs+'" font-family="Helvetica,Arial,\'Liberation Sans\',sans-serif"'+(o.f=='B'?' font-weight="bold"':'')+(o.f=='I'?' font-style="italic"':'')+' text-anchor="'+an+'" fill="'+o.c+'" textLength="'+rpW(o.s,o.pt,o.f).toFixed(2)+'" lengthAdjust="spacingAndGlyphs" xml:space="preserve">'+rpEsc(o.s)+'</text>'}});
+ return s+'</svg>'}
+/* v2.12: on the results figures (deflection, diagrams, reactions) a support is a small grey marker – a filled triangle for
+   a pin, an open one for a roller, a short bar for a fixed support, a small spring for a spring support – so the values
+   can be read; Figure 1 and the loading figure keep the full symbols */
+function rpSupMark(pg,n,P,c){const[x,y]=P(n.x,n.y),sp=n.spr,sv=sp&&sp.y>0&&!RIG(n),sh=sp&&sp.x>0&&!(n.sup=='pin'||n.sup=='rx'||n.sup=='fix');
+ if(sv||sh){const dx=sv?0:-1,dy=sv?1:0,px=-dy,py=dx,pts=[[x+dx*.6,y+dy*.6]];for(let i=1;i<6;i++){const t=.6+i*.5;pts.push([x+dx*t+px*(i%2?.7:-.7),y+dy*t+py*(i%2?.7:-.7)])}const e=3.6;pts.push([x+dx*e,y+dy*e]);rpP(pg,pts,{st:c,w:.2});rpL(pg,x+dx*e-px*1.3,y+dy*e-py*1.3,x+dx*e+px*1.3,y+dy*e+py*1.3,.25,c);return}
+ if(n.sup=='fix'){const T=rpRot(x,y,rpFixAng(n)),a=T(-2,.5),b=T(2,.5);rpL(pg,a[0],a[1],b[0],b[1],.7,c);return}
+ if(n.sup=='pin'||n.sup=='ry'||n.sup=='rx'){const T=rpRot(x,y,n.sup=='rx'?Math.PI/2:0);rpP(pg,[T(0,.55),T(-1.3,2.7),T(1.3,2.7)],{cl:1,st:c,w:.2,fill:n.sup=='pin'?c:'#ffffff'})}}
+function rpStructure(pg,P,o){const c=o.mono?'#000':'#1b1b1b',w=o.thin?.25:.5;
+ members.forEach(m=>{const cb=m.type=='cable';rpP(pg,mpts(m).map(q=>P(q.x,q.y)),{st:o.ghost?'#b8b8b8':cb?(o.mono?'#000':'#8a5a00'):c,w:o.ghost?.2:cb?.3:w,d:cb?[1.6,.9]:o.ghost?[1.2,.8]:undefined})});
+ if(o.noSup)return;nodes.forEach(n=>o.simple?rpSupMark(pg,n,P,'#8a8a8a'):rpSupport(pg,n,P,o.ghost?'#9a9a9a':c));
+ nodes.forEach(n=>{const[x,y]=P(n.x,n.y);if(n.hinge)rpP(pg,rpCirc(x,y,.85,16),{cl:1,st:c,w:.25,fill:'#ffffff'});else if(!o.ghost)rpP(pg,rpCirc(x,y,.42,10),{cl:1,fill:c})})}
+function rpFigure(kind,o,hMax){const big=kind=='geom'||kind=='load'||kind=='reac',pad=kind=='geom'?{l:rpBox().y1-rpBox().y0>1e-9?17:9,r:9,t:9,b:19}:kind=='load'?{l:16,r:16,t:16,b:13}:kind=='reac'?{l:20,r:20,t:10,b:32}/* v2.12: room below the supports for the value blocks */:kind=='defl'?{l:12,r:12,t:13,b:13}:{l:14,r:14,t:16,b:16};
+ const F=rpFit(RPG.MW,hMax,pad);return{h:F.h,draw:(pg,Y)=>{const X=RPG.MX,P=rpMap(F,X,Y),boxes=[],pal=rpPal(o),dp=o.dp,FB={X,Y,w:F.w,h:F.h};
+  rpR(pg,X,Y,F.w,F.h,{st:'#c8c8c8',w:.15});
+  if(kind=='geom'){rpStructure(pg,P,o);rpNumbers(pg,P,boxes,FB);rpDims(pg,P,F,X,Y,boxes);return}
+  if(kind=='load'){rpStructure(pg,P,o);rpLoads(pg,P,pal.L,boxes,FB,o);if(o.num)rpNumbers(pg,P,boxes,FB);return}
+  const r=res;if(!r||!r.ok){rpStructure(pg,P,o);rpT(pg,X+F.w/2,Y+F.h/2,'No results – the structure is unstable',8,{a:'c',c:'#a00'});return}
+  if(kind=='defl'){rpStructure(pg,P,Object.assign({},o,{ghost:1,simple:1}));rpDefl(pg,P,F,pal.D,boxes,FB,o);if(o.num)rpNumbers(pg,P,boxes,FB);return}
+  if(kind=='reac'){rpStructure(pg,P,Object.assign({},o,{simple:1}));rpReac(pg,P,pal.R,boxes,FB,o);if(o.num)rpNumbers(pg,P,boxes,FB);return}
+  rpStructure(pg,P,Object.assign({},o,{thin:1,simple:1}));rpDiag(pg,P,F,kind,pal[kind],boxes,FB,o);if(o.num)rpNumbers(pg,P,boxes,FB)}}}
+/* v2.12: diagram amplitude (mm): as before at most 17 % of the structure's size and inside the margin, and now also at most
+   30 % of the median member length, at most half the clear gap between separate structures (less 1.5 mm, so a head-to-head
+   diagram stays beside its own structure) and 2.4 mm for axial force, which is drawn as a thin band */
+function rpGap(){const f=comps(),B=new Map(),bb=(r)=>{let b=B.get(r);if(!b){b={x0:1e18,x1:-1e18,y0:1e18,y1:-1e18};B.set(r,b)}return b},ad=(b,q)=>{b.x0=Math.min(b.x0,q.x);b.x1=Math.max(b.x1,q.x);b.y0=Math.min(b.y0,q.y);b.y1=Math.max(b.y1,q.y)};
+ nodes.forEach(n=>ad(bb(f(n)),n));members.forEach(m=>{const b=bb(f(m.a));mpts(m).forEach(q=>ad(b,q))});
+ const L=[...B.values()];let g=Infinity;for(let i=0;i<L.length;i++)for(let j=i+1;j<L.length;j++){const a=L[i],b=L[j],sep=Math.max(b.x0-a.x1,a.x0-b.x1,b.y0-a.y1,a.y0-b.y1);if(sep>1e-9)g=Math.min(g,sep)}return g}
+function rpAmp(F,key){const s=F.s,Lp=members.map(m=>rpMemL(m)*s).filter(v=>v>1e-9).sort((a,b)=>a-b),med=Lp.length?Lp[Lp.length>>1]:40;
+ let A=Math.min(Math.min(F.pad.t,F.pad.l)-4,Math.max(5,.17*Math.max(F.bw,F.bh)*s),Math.max(4,.3*med));const g=rpGap()*s;if(isFinite(g))A=Math.min(A,Math.max(2.5,g/2-1.5));if(key=='N')A=Math.min(A,2.4);return A}
+function rpDiag(pg,P,F,key,c,boxes,FB,o){const r=res,gm=key=='M'?r.mM:key=='N'?r.mN:r.mV,dp=o.dp,s=F.s,sg=key=='M'?-1:1,fill=o.mono?'#e2e2e2':rpMix(c,.84);
+ if(!(gm>1e-9)){rpT(pg,FB.X+FB.w/2,FB.Y+5,key=='N'?'No axial force in any member':key=='V'?'No shear force in any member':'No bending moment in any member',7,{a:'c',c:'#555'});return}
+ const A=rpAmp(F,key),k=A/gm,lab=new Map(),ends=[];
+ r.els.forEach(el=>{if(key=='N'&&el.m.type=='cable'&&el.off)return;const n=[-el.s,-el.c],base=q=>P(el.p.x+el.c*q.x,el.p.y+el.s*q.x);
+  const pts=el.pts.map(q=>{const b=base(q),v=q[key]*k*sg;return[b[0]+n[0]*v,b[1]+n[1]*v]}),b0=P(el.p.x,el.p.y),b1=P(el.q.x,el.q.y);
+  rpP(pg,[b0,...pts,b1],{cl:1,fill});rpP(pg,pts,{st:c,w:.3});
+  el.pts.forEach((q,i)=>{let L=lab.get(el.m);if(!L){L={p:{v:0},n:{v:0}};lab.set(el.m,L)}const v=q[key],T=v>=0?L.p:L.n,sgn=Math.sign(v*sg)||1;if(Math.abs(v)>Math.abs(T.v)*(1+1e-9)+1e-12){T.v=v;T.P=pts[i];T.n=[n[0]*sgn,n[1]*sgn]}});
+  ends.push({m:el.m,first:el.p===el.m.a,last:el.q===el.m.b,el,pts,n})});
+ if(!o.vals)return;const fmt=v=>key=='N'?rpF(Math.abs(v),dp)+(v>1e-9?' T':v<-1e-9?' C':''):rpF(v,dp);
+ const done=[],put=(P0,nv,v,f)=>{const t0=fmt(v);if(done.some(d=>d.t==t0&&Math.hypot(d.x-P0[0],d.y-P0[1])<9))return true;done.push({t:t0,x:P0[0],y:P0[1]});const ax=P0[0]+nv[0]*1.6,ay=P0[1]+nv[1]*1.6,a=Math.abs(nv[0])>.45?(nv[0]>0?'l':'r'):'c',yy=ay+(Math.abs(nv[0])>.45?1:nv[1]>0?2.2:-.5);return rpLab(pg,boxes,FB,ax,yy,fmt(v),6.2,{a,c,f,bg:1})};
+ lab.forEach(L=>[L.p,L.n].forEach(T=>{if(T.P&&Math.abs(T.v)>.02*gm)put(T.P,T.n,T.v,'B')}));
+ ends.forEach(E=>{[[E.first,0],[E.last,E.el.pts.length-1]].forEach(([ok,i])=>{if(!ok)return;const q=E.el.pts[i],L=lab.get(E.m);if(Math.abs(q[key])<.02*gm||Math.abs(q[key]-L.p.v)<.005*gm||Math.abs(q[key]-L.n.v)<.005*gm)return;const sgn=Math.sign(q[key]*sg)||1;
+  put(E.pts[i],[E.n[0]*sgn,E.n[1]*sgn],q[key],'H')})})}
+/* v2.12: one entry per supported node, its rigid and spring parts together. Arrows and moment arcs are drawn first and kept
+   clear; then each node's values go in one block (rpBlock) in the first free place below, beside or above the node, with a
+   thin leader when the block had to move away. A part carried by a spring is marked (spr). */
+function rpBlock(pg,boxes,F,x,y,lines,c){const pt=6.2,lh=2.65,w=Math.max(...lines.map(t=>rpW(t,pt,'B')))+1.4,h=lines.length*lh+1,C=[];
+ [13,16.5,20,24].forEach(d=>C.push([x-w/2,y+d],[x+1.5,y+d],[x-w-1.5,y+d]));C.push([x+13,y-h/2],[x-w-13,y-h/2],[x+13,y+2],[x-w-13,y+2],[x-w/2,y-13-h],[x+4,y-13-h],[x-w-4,y-13-h]);
+ const fits=b=>!(b[0]<F.X+.5||b[2]>F.X+F.w-.5||b[1]<F.Y+.5||b[3]>F.Y+F.h-.5),free=b=>!boxes.some(q=>b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]);
+ let b=null;for(const[bx,by]of C){const t=[bx,by,bx+w,by+h];if(fits(t)&&free(t)){b=t;break}}if(!b)for(const[bx,by]of C){const t=[bx,by,bx+w,by+h];if(fits(t)){b=t;break}}if(!b)b=[x-w/2,y+13,x+w/2,y+13+h];
+ boxes.push(b);const cx=Math.max(b[0],Math.min(x,b[2])),cy=Math.max(b[1],Math.min(y,b[3]));if(Math.hypot(cx-x,cy-y)>14.5)rpL(pg,x,y,cx,cy,.12,'#9a9a9a');
+ rpR(pg,b[0],b[1],w,h,{fill:'#ffffff',st:/^#[0-9a-f]{6}$/i.test(c)?rpMix(c,.55):'#999999',w:.12});lines.forEach((t,k)=>rpT(pg,b[0]+.7,b[1]+lh*(k+1),t,pt,{c,f:'B'}));return b}
+function rpReac(pg,P,c,boxes,F,o){const r=res,dp=o.dp,SP=r.SP||[],e=Math.max(...r.R.map(q=>Math.max(Math.abs(q.r[0]),Math.abs(q.r[1]),Math.abs(q.r[2]))),...SP.map(q=>Math.max(Math.abs(q.fx),Math.abs(q.fy),Math.abs(q.m))),1e-9)*1e-6;
+ const by=new Map(),get=n=>{let g=by.get(n);if(!g){g={n,fx:0,fy:0,m:0,sx:0,sy:0,sm:0};by.set(n,g)}return g};
+ r.R.forEach(({n,r:q})=>{const g=get(n);g.fx+=q[0];g.fy+=q[1];if(n.sup=='fix')g.m+=q[2]});SP.forEach(q=>{const g=get(q.n);g.fx+=q.fx;g.fy+=q.fy;g.m+=q.m;g.sx+=Math.abs(q.fx);g.sy+=Math.abs(q.fy);g.sm+=Math.abs(q.m)});
+ const G=[...by.values()];
+ G.forEach(g=>{const[x,y]=P(g.n.x,g.n.y),t=v=>v>e?' (spr)':'';g.x=x;g.y=y;g.L=[];
+  if(Math.abs(g.fx)>e){const d=Math.sign(g.fx),x0=x-d*11;rpArrow(pg,x0,y,x-d*1.2,y,c,.4,2.1);boxes.push([Math.min(x0,x)-.3,y-1,Math.max(x0,x)+.3,y+1]);g.L.push('Rx '+rpF(Math.abs(g.fx),dp)+' kN'+t(g.sx))}
+  if(Math.abs(g.fy)>e){const d=Math.sign(g.fy),y0=y+d*11,yt=y+d*1.2;rpArrow(pg,x,y0,x,yt,c,.4,2.1);boxes.push([x-1,Math.min(y0,yt)-.3,x+1,Math.max(y0,yt)+.3]);g.L.push('Ry '+rpF(Math.abs(g.fy),dp)+' kN'+t(g.sy))}
+  if(Math.abs(g.m)>e){rpMomArc(pg,x,y,g.m,3.4,c);boxes.push([x-4,y-4,x+4,y+4]);g.L.push('M '+rpF(Math.abs(g.m),dp)+' kNm '+(g.m>0?'(acw)':'(cw)')+t(g.sm))}});
+ G.sort((a,b)=>a.x-b.x||a.y-b.y).forEach(g=>{if(g.L.length)rpBlock(pg,boxes,F,g.x,g.y,g.L,c)})}
+/* the Output column beside the reactions figure: each supported node's total vertical reaction, spring force included */
+{const rb0=rpBlocks;rpBlocks=function(o){const B=rb0(o),r=res,fr=B.find(b=>b.k=='fig'&&b.kind=='reac');if(fr&&r&&r.ok){
+ const RY=new Map();r.R.forEach(q=>RY.set(q.n,{n:q.n,v:q.r[1],s:0}));(r.SP||[]).forEach(q=>{const g=RY.get(q.n)||{n:q.n,v:0,s:0};g.v+=q.fy;if(Math.abs(q.fy)>1e-9)g.s=1;RY.set(q.n,g)});
+ fr.out=[...RY.values()].sort((a,b)=>nodes.indexOf(a.n)-nodes.indexOf(b.n)).slice(0,7).map(q=>({l:'Node '+(nodes.indexOf(q.n)+1)+' Ry'+(q.s?' (spring)':''),v:rpF(q.v,o.dp)+' kN'}))}return B}}
 
 
 /* ===== v2.6 distributed-load direction, application options and self-weight =====
@@ -3358,25 +3496,22 @@ Object.assign(GAL_DESC,{h2h_relcol:'A beam continuous over a column, loaded on o
 /* ===== v2.11 "Ghost": moving supports ghosted with the deflected shape, Initial structure toggle, home button ===== */
 /* Ghosts are drawn after drawSpr (js/12), on the same deflection scale dscale(), so they follow the Diagram scale
    and the Animate playback. A support that moves (a roller sliding on its track, a pin or roller on a spring,
-   a fixed support turning on a rotational spring) is drawn again, dashed, at its displaced position. A spring is
-   drawn again, dashed, from its ground anchor to the displaced node, so it leans and stretches with the deflected
-   shape in both directions (js/12 draws it compressing in its own direction only).
+   a fixed support turning on a rotational spring) is drawn again, dashed, at its displaced position. (v2.11 also
+   ghosted springs; from v2.12 js/12 draws each spring from its anchor to the displaced node instead.)
    Settled supports are left alone: js/12 already draws them at their settled level. */
-const GH={col:'#ff7a1a',dash:[4,3],alpha:.8,minPx:1.5,minRot:.02};
+/* v2.12: springs are no longer ghosted (drawSpr in js/12 draws each spring from its anchor to the displaced node), the
+   ghosts are fainter and a support must move at least 3 px to be ghosted */
+const GH={col:'#ff7a1a',dash:[4,3],alpha:.45,minPx:3,minRot:.02};
 function ghostList(dsO){const out=[];if(!res||!res.ok||!res.u||!$('sD').checked)return out;const u=res.u,ds=dsO!==undefined?dsO:dscale();if(!(ds>0))return out;
  nodes.forEach(n=>{const i=n.i;if(i===undefined)return;const sp=n.spr,hasSup=n.sup&&n.sup!='none';if(!hasSup&&!sp)return;if(n.sd&&RIG(n))return;
   const dx=u[3*i]*ds*S,dy=-u[3*i+1]*ds*S,rot=-u[3*i+2]*ds,mv=Math.hypot(dx,dy)>=GH.minPx,tr=n.sup=='fix'&&Math.abs(rot)>=GH.minRot;
-  if(hasSup&&(mv||tr))out.push({n,k:'sup',dx,dy,rot:n.sup=='fix'?rot:0});
-  if(sp&&mv){if(sp.y>0&&!RIG(n))out.push({n,k:'sy',dx,dy});if(sp.x>0&&n.sup!='pin'&&n.sup!='rx'&&n.sup!='fix')out.push({n,k:'sx',dx,dy})}});
+  if(hasSup&&!sprSym(n)&&(mv||tr))out.push({n,k:'sup',dx,dy,rot:n.sup=='fix'?rot:0});
+  });
  return out}
 function drawGhosts(){const g=ghostList();if(!g.length)return;
- /* the spring lengths are worked out exactly as drawSpr does, so each ghost spring starts on the drawn ground line */
- const u=res.u,ds=dscale(),cf=comps(),LV=new Map(),LX=new Map();nodes.forEach(n=>{if(n.spr&&n.i!==undefined){const r=cf(n);LV.set(r,Math.max(LV.get(r)||46,-u[3*n.i+1]*ds*S+22));LX.set(r,Math.max(LX.get(r)||46,-u[3*n.i]*ds*S+22))}});
  ctx.save();ctx.globalAlpha=GH.alpha;ctx.setLineDash(GH.dash);
  g.forEach(o=>{const n=o.n,x=sx(n.x),y=sy(n.y);
   if(o.k=='sup'){ctx.save();ctx.translate(x+o.dx,y+o.dy);if(o.rot)ctx.rotate(o.rot);ctx.translate(-x,-y);support(n,0,GH.col);ctx.restore()}
-  else if(o.k=='sy')zig(x,y+(LV.get(cf(n))||46),x+o.dx,y+o.dy,6,7,GH.col,1.5);
-  else if(o.k=='sx')zig(x-(LX.get(cf(n))||46),y,x+o.dx,y+o.dy,6,7,GH.col,1.5);
   ctx.save();ctx.setLineDash([]);ctx.strokeStyle=GH.col;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x+o.dx,y+o.dy,4,0,7);ctx.stroke();ctx.restore()});
  ctx.restore()}
 {const ds0=drawSpr;drawSpr=function(){ds0.apply(this,arguments);try{drawGhosts()}catch(e){console.warn('v2.11 ghosts',e)}}}
@@ -3397,7 +3532,7 @@ $('sI').onchange=draw;
   T('  the ghost moves in +x only (dy / dx)',0,Math.abs(g[0].dy)/Math.max(1e-9,Math.abs(g[0].dx)),1e-9);
   /* 2 beam on a vertical spring: rest-length spring ghost */
   fresh();a=nn(0,0,'pin');b=nn(6,0);m=mm(a,b);b.spr={x:0,y:5000,r:0};b.load={fx:0,fy:-50,m:0};res=solve();g=ghostList(K);
-  T('Beam pinned at A and carried on a vertical spring at B, load at B: the spring is ghosted (count)',1,g.filter(o=>o.n===b&&o.k=='sy').length,0);
+  T('Beam pinned at A and carried on a vertical spring at B, load at B: no ghost at B, the spring itself follows the node (v2.12, count)',0,g.filter(o=>o.n===b).length,0);
   T('  δ = F / k for the spring node, mm (cross-check of the displacement the ghost uses)',-10,res.u[3*b.i+1]*1e3,1e-6);
   /* 3 a settled support is not ghosted again */
   fresh();a=nn(0,0,'pin');b=nn(5,0,'ry');const c=nn(10,0,'ry');mm(a,b);mm(b,c);b.sd=.01;res=solve();
@@ -3410,5 +3545,57 @@ $('sI').onchange=draw;
   T('Hiding the initial structure does not change the results (max |M|, kNm)',r1.mM,r2.mM,1e-12);
  }catch(e){out.push({name:'Moving supports: '+e.message,exp:1,got:0,tol:0,ok:false})}
  nodes=sv[0];members=sv[1];ann=sv[2];sel=sv[3];swS().on=sv[4];$('sD').checked=sv[5];$('sI').checked=sv[6];res=sv[7];return out}}
+
+/* ===== v2.12 "Clear": decluttering the canvas and the report =====
+   The work is in js/12 (label queue LBL / lblPlace / lblFlush, point-load arrow length plLen / plTip, section-name runs
+   secRuns, compound spring symbol drawSpr / sprSym / sprKeys / sprLink), js/13 (rpSupMark, rpAmp / rpGap, rpBlock / rpReac,
+   the Output column and the preview text widths) and js/22 (no spring ghosts). This module adds the Labels control, makes a
+   point load pickable along its shortened arrow, and appends the verification tests. */
+/* point loads are picked along the arrow as drawn (js/05 used the full 30 px per kN length) */
+hitLoad=function(p){for(const n of nodes){const l=n.load;if(!l)continue;const x=sx(n.x),y=sy(n.y);if((l.fx||l.fy)&&sd(p,[x,y],plTip(n))<9)return{t:'pl',n};if(l.m&&Math.abs(Math.hypot(p[0]-x,p[1]-y)-30)<9)return{t:'ml',n}}
+ for(const m of members){if(!m.w&&!m.we)continue;const T=udlTips(m);for(let i=0;i<T.length-1;i++)if(sd(p,T[i],T[i+1])<9)return{t:'u',m}}return null};
+/* Labels: All / Key values / None, remembered in this browser */
+{const s=$('lblM');if(s){s.value=LBL.mode;s.onchange=()=>{LBL.mode=s.value;try{localStorage.setItem('fp.labels',LBL.mode)}catch(e){}draw()}}}
+/* verification */
+{const rt0=runTests;runTests=function(){const out=rt0(),sv=[nodes,members,ann,sel,swS().on,res,LBL.mode,DS.L,$('sD').checked],G=t=>out.push({h:t}),
+  T=(name,exp,got,tol)=>out.push({name,exp,got,tol,ok:Math.abs(got-exp)<=tol*Math.max(1,Math.abs(exp))}),Y=(name,c)=>T(name,1,c?1:0,0),
+  fresh=()=>{nodes=[];members=[];ann=[];sel=null;swS().on=false},ex=k=>{fresh();PRESETS[k][1]();res=solve()};
+ try{G('Decluttering the canvas and the report (v2.12)');DS.L=1;LBL.mode='key';$('sD').checked=true;
+  /* point loads */
+  T('Point-load arrow: 1 kN is drawn 30 px long (linear range)',30,plLen(1),1e-12);T('  3 kN: 90 px, the end of the linear range',90,plLen(3),1e-12);
+  Y('  150 kN: no longer than 210 px (was 4 500 px)',plLen(150)<=210&&plLen(150)>plLen(25)&&plLen(25)>plLen(3));
+  /* label placement */
+  let P=lblPlace([{x:100,y:100,w:60,p:2,s:'a'},{x:100,y:100,w:60,p:2,s:'b'}],'key',800,600);
+  Y('Two labels at the same spot: both placed, the second moved clear',P.length==2&&(P[0].b[2]<=P[1].b[0]||P[1].b[2]<=P[0].b[0]||P[0].b[3]<=P[1].b[1]||P[1].b[3]<=P[0].b[1]));
+  const tiny=[{x:5,y:14,w:40,p:1,s:'a'},{x:5,y:14,w:40,p:1,s:'b'}];
+  T('  no room (a 60 × 20 px canvas): a low-priority label is dropped in Key values mode (labels drawn)',1,lblPlace(tiny,'key',60,20).length,0);
+  T('  and kept, overlapping, in All mode (labels drawn)',2,lblPlace(tiny,'all',60,20).length,0);
+  T('  a high-priority label (a reaction) is never dropped (labels drawn)',2,lblPlace([{x:5,y:14,w:40,p:6,s:'a'},{x:5,y:14,w:40,p:6,s:'b'}],'key',60,20).length,0);
+  T('  None mode draws no values, only section names (labels drawn)',1,lblPlace([{x:100,y:100,w:30,p:6,s:'R'},{x:200,y:100,w:30,p:1,sec:1,len:200,s:'UB'}],'none',800,600).length,0);
+  P=lblPlace([{x:100,y:100,w:30,p:6,s:'R'},{x:100,y:100,w:30,p:1,s:'k'}],'key',800,600);Y('  priority order: the reaction keeps its own spot, the stiffness label moves',P[0].o.s=='R'&&!P[0].moved&&P[1].moved);
+  /* section-name runs */
+  fresh();let pv=null;for(let i=0;i<=12;i++){const n=nn(i,0,i==0?'pin':i==12?'ry':'none');if(pv){const m=mm(pv,n);m.EI=2*EI_REF}pv=n}
+  let SR=secRuns();T('A beam of 12 members with one section: the section name is given once (labels)',1,[...SR.values()].filter(r=>r.show).length,0);
+  fresh();{const a=nn(0,0,'fix'),b=nn(0,4),c=nn(6,4),d=nn(6,0,'fix');[mm(a,b),mm(b,c),mm(c,d)].forEach(m=>m.EI=2*EI_REF)}SR=secRuns();
+  T('  a portal frame of three members with one section: once per member, as the corners break the run (labels)',3,[...SR.values()].filter(r=>r.show).length,0);
+  /* key springs */
+  ex('spr_wink');let k=sprKeys();T('Beam on 13 springs: only the key springs are labelled (largest and smallest movement, two outermost; at most 4)',1,k.K.size<=4&&k.K.size>=2?1:0,0);
+  LBL.mode='all';k=sprKeys();T('  in All mode every spring is labelled (count)',nodes.filter(n=>n.spr).length,k.K.size,0);LBL.mode='key';
+  ex('spr_base');const sn=nodes.filter(n=>sprSym(n));Y('Portal on spring bases: the spring bases are drawn as compound spring symbols, not as rollers',sn.length==2&&sn.every(n=>n.sup!='none'));
+  /* report: diagram size */
+  const F=rpFit(RPG.MW,88,{l:14,r:14,t:16,b:16}),g=rpGap()*F.s,AM=rpAmp(F,'M');
+  Y('Report: head-to-head moment diagram stays within half the gap between the two frames',AM<=Math.max(2.5,g/2-1.5)+1e-9);
+  Y('  axial force is a thin band (amplitude ≤ 2.4 mm)',rpAmp(F,'N')<=2.4+1e-12);
+  const Lp=members.map(m=>rpMemL(m)*F.s).sort((a,b)=>a-b);Y('  and no deeper than 30 % of the median member length',AM<=Math.max(4,.3*Lp[Lp.length>>1])+1e-9);
+  /* report: reactions figure and Output column */
+  const o=Object.assign({},RPDEF,{sel:Object.assign({},RPDEF.sel)}),B=rpBlocks(o),fr=B.find(b=>b.k=='fig'&&b.kind=='reac'),sp=fr.out.filter(e=>/\(spring\)/.test(e.l));
+  const SPy=(res.SP||[]).reduce((t,q)=>t+q.fy,0),Ry=sp.reduce((t,e)=>t+parseFloat(e.v),0);
+  T('Report Output column: spring-supported nodes give the spring force as Ry (sum, kN)',SPy,Ry,.01);
+  const pg={it:[]};fr.f.draw(pg,40);const lab=pg.it.filter(q=>q.t=='t'&&/^(Rx|Ry|M) /.test(q.s)).map(q=>[q.x,q.y-q.pt*RPK*.8,q.x+rpW(q.s,q.pt,q.f),q.y+q.pt*RPK*.2]);
+  let ov=0;for(let i=0;i<lab.length;i++)for(let j=i+1;j<lab.length;j++){const a=lab[i],b=lab[j];if(a[0]<b[2]-.05&&a[2]>b[0]+.05&&a[1]<b[3]-.05&&a[3]>b[1]+.05)ov++}
+  T('  reactions figure: no reaction label overlaps another (overlaps)',0,ov,0);Y('  every supported node has its values (Rx, Ry or M lines ≥ 4)',lab.length>=4);
+  Y('Report preview text is set to the PDF widths (textLength)',/textLength="/.test(rpSVG({it:[{t:'t',x:0,y:0,s:'abc',pt:8,f:'H',a:'l',c:'#000'}]},100)));
+ }catch(e){out.push({name:'Decluttering: '+e.message,exp:1,got:0,tol:0,ok:false})}
+ nodes=sv[0];members=sv[1];ann=sv[2];sel=sv[3];swS().on=sv[4];res=sv[5];LBL.mode=sv[6];DS.L=sv[7];$('sD').checked=sv[8];return out}}
 </script></body></html>
 </body></html>
