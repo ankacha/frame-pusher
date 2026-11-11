@@ -2,7 +2,7 @@
 
 Frame Pusher is a live 2D frame analyser that runs in the browser: draw a structure, support it, push and pull it, and watch the deflected shape, bending moment, shear, axial force and reactions update as you go. It is for checking structural behaviour and for teaching the finite element (direct stiffness) method. It is analysis software only: there are no design-code checks, load cases or load combinations.
 
-Current version: **v2.13 "Nodes"**.
+Current version: **v2.14 "Mechanism"**.
 
 ## Layout (since v2.4)
 
@@ -11,8 +11,8 @@ The published page is a single self-contained HTML file. It is built from the so
 | Path | What it holds |
 |---|---|
 | `page.html` | page shell: head, markup, and one `<style>` and one `<script>` element holding `/*@include path*/` markers |
-| `css/` | fifteen style sheets, in cascade order: base, v1.21 theme, v1.24 neon, v1.26 layout, v2.2 popups/flyouts, v2.5 welcome guide, v2.6 loads, v2.7 example gallery, v2.8 save / open files, v2.9 tapered members, v2.9.1 member inspector, v2.10 member end releases, v2.11 unstable warning and home button, v2.12 Labels control, v2.13 node inspector, inspector tab and theme button |
-| `js/` | twenty-six script modules, in the run order listed in `page.html`: 01 setup … 13 report, 13b report decluttering (v2.12), 13a load direction / self-weight, 14 start-up, 15 welcome guide, 16 example gallery, 17 save / open files, 18 joining collinear members when a node is removed, 19 tapered and haunched members, 20 member inspector, 21 member end releases, 22 moving-support ghosts, 23 decluttering (Labels control, load picking, tests), 24 node inspector, inspector tab, theme button and surprising-behaviour examples. They share one global scope, so order matters. |
+| `css/` | sixteen style sheets, in cascade order: base, v1.21 theme, v1.24 neon, v1.26 layout, v2.2 popups/flyouts, v2.5 welcome guide, v2.6 loads, v2.7 example gallery, v2.8 save / open files, v2.9 tapered members, v2.9.1 member inspector, v2.10 member end releases, v2.11 unstable warning and home button, v2.12 Labels control, v2.13 node inspector, inspector tab and theme button, v2.14 mechanism panel and snapshot |
+| `js/` | twenty-seven script modules, in the run order listed in `page.html`: 01 setup … 13 report, 13b report decluttering (v2.12), 13a load direction / self-weight, 14 start-up, 15 welcome guide, 16 example gallery, 17 save / open files, 18 joining collinear members when a node is removed, 19 tapered and haunched members, 20 member inspector, 21 member end releases, 22 moving-support ghosts, 23 decluttering (Labels control, load picking, tests), 24 node inspector, inspector tab, theme button and surprising-behaviour examples, 25 mechanism mode, snapshot overlay, mechanism and remarkable-structure examples. They share one global scope, so order matters. |
 | `build.mjs` | replaces each marker with the file's contents, verbatim |
 
 ## Build
@@ -27,7 +27,7 @@ Edit a module, rebuild, run the in-app tests (Verification tests in the top bar)
 
 The version lives in three places, and `build.mjs` checks that they agree: `VER` at the end of `js/09-help.js`, the `<title>` and the top-bar label in `page.html`. The changelog is `js/10-changelog.js`; the About build date is in `js/11-undo-sections-solver.js`.
 
-If the Project copies are ever out of step with the published page, the modules can be recovered from the published page itself: the build inserts each file verbatim, so splitting the page's `<style>` and `<script>` at each module's first line gives the modules back (v2.13 was rebuilt this way, byte for byte, from the v2.12 page).
+If the Project copies are ever out of step with the published page, the modules can be recovered from the published page itself: the build inserts each file verbatim, so splitting the page's `<style>` and `<script>` at each module's first line gives the modules back (v2.13 was rebuilt this way, byte for byte, from the v2.12 page). For v2.14 the page was built the same way from the v2.13 page: `js/09` (which starts at `function showMethod`), `js/10` and `js/11` were swapped for their new versions and the two new files inserted before `</style>` and `</script>`, which is what `build.mjs` produces from the updated `page.html`.
 
 ## Notes by version
 
@@ -56,3 +56,11 @@ If the Project copies are ever out of step with the published page, the modules 
   - *Theme* — the existing `#theme` button (its click handler is still in js/11) is moved to the end of `#top`, given class `thm` and a sun / moon icon by `thmSync()`; the choice is kept in `localStorage['fp.theme']` and applied at start-up.
   - *Surprising behaviour* — nine presets `sur_*` in a new optgroup before Head to head, with `GAL_DESC` entries; `galTitle` is wrapped to drop the "Surprise:" prefix in the gallery.
   - js/24 appends 43 verification tests (415 in total, all passing at release), including joint equilibrium at every node of every example.
+- **v2.14 "Mechanism":** (`js/25-mechanism-snapshot.js`, `css/16-v2.14-mechanism.css`)
+  - *Mechanism mode* — `mechModes(r)` (pure, tested) takes an unsolvable result (`r.ok` false, which still carries `r.KM` and `r.els`) and returns `{modes, n, big}`. It scales the free-DOF block of `KM.K` by `1/√K_ii`, eliminates it symmetrically without row exchanges, and treats a pivot below `MECH_TOL` (1e-9 of its own scaled diagonal) or a zero diagonal as a null pivot: that row is zeroed and skipped. Each null pivot gives one mode by back-substitution with that DOF set to 1 and the other null DOFs 0; the mode is unscaled to physical units, normalised so its largest node translation is 1 (or, if no node moves, its largest rotation × the median element length), and carries `v` (a full-length DOF vector, released-end DOFs included), `node` / `dir` (the most-moving node and 0 = x, 1 = y) and `res`, the zero-energy residual |K v| / (|K| |v|). Above 700 free DOFs it returns `big` and no modes.
+  - *Drawing* — `drawLoads` (js/12) is wrapped: `snapDraw()` before it, then `mechDraw()` and `snapTable()` after it. `mechGet()` caches the modes on `ser()` (the model as JSON), so they are recomputed only when the model changes. `mechElPts(el, v, a)` draws each element with the Hermite cubics (straight for cables). `mechTick` drives the rocking motion with `requestAnimationFrame` at about 30 frames a second while the structure is unstable and the shape is shown, and stops under `prefers-reduced-motion`. The panel is `#mech` in `#wrap` (`#mechT` text, `#mechP` / `#mechN` step, `#mechH` hide / show); the Info panel line is `#read .mechI`.
+  - *Snapshot* — `SNAP.s` holds the pinned results: `snapStats(r)` (pure, tested: `mD`, `mM`, `mV`, `mN`, the largest reaction or spring force `mR`, and the sum of vertical reactions `Ry`), the deflection magnification `DM.k` at the time, the member geometry and every element's sample points `[x, u, v, M, V, N]`. It lives only in memory (not saved, not undone). `snapScale(key)` and `snapDS()` use the live diagrams' own scale (`soft()` with the Diagram scale multipliers), reduced only if the ghost would pass 330 px (diagrams) or 400 px (deflection), which sets `SNAP.red`. Controls `#snapB`, `#snapS` / `#snapC` and `#snapX` are inserted in `#ctb` before Clear loads; the table is `#snapCmp`, after `#read`. `preset()` is wrapped to clear the snapshot and reset the mechanism panel.
+  - *Examples* — seven `mec_*` presets in a Mechanisms optgroup and four `rem_*` presets in a Remarkable structures optgroup, both before Surprising behaviour, with `GAL_DESC` entries; `galTitle` is wrapped to drop the "Mechanism:" and "Head to head:" prefixes in those groups.
+  - *Fix* — `nodeData` is wrapped: when every force at a joint is below 1e-6 kN, the residual is the absolute sum, not the sum divided by a 1e-9 floor.
+  - `#ctb` and `#mech` are centred at `calc(50% − 130px)` to stay clear of `#dock`.
+  - js/25 appends 43 verification tests (458 in total, all passing at release).
