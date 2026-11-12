@@ -2,7 +2,7 @@
 
 Frame Pusher is a live 2D frame analyser that runs in the browser: draw a structure, support it, push and pull it, and watch the deflected shape, bending moment, shear, axial force and reactions update as you go. It is for checking structural behaviour and for teaching the finite element (direct stiffness) method. It is analysis software only: there are no design-code checks, load cases or load combinations.
 
-Current version: **v2.14 "Mechanism"**.
+Current version: **v2.15 "Workings"**.
 
 ## Layout (since v2.4)
 
@@ -11,8 +11,8 @@ The published page is a single self-contained HTML file. It is built from the so
 | Path | What it holds |
 |---|---|
 | `page.html` | page shell: head, markup, and one `<style>` and one `<script>` element holding `/*@include path*/` markers |
-| `css/` | sixteen style sheets, in cascade order: base, v1.21 theme, v1.24 neon, v1.26 layout, v2.2 popups/flyouts, v2.5 welcome guide, v2.6 loads, v2.7 example gallery, v2.8 save / open files, v2.9 tapered members, v2.9.1 member inspector, v2.10 member end releases, v2.11 unstable warning and home button, v2.12 Labels control, v2.13 node inspector, inspector tab and theme button, v2.14 mechanism panel and snapshot |
-| `js/` | twenty-seven script modules, in the run order listed in `page.html`: 01 setup … 13 report, 13b report decluttering (v2.12), 13a load direction / self-weight, 14 start-up, 15 welcome guide, 16 example gallery, 17 save / open files, 18 joining collinear members when a node is removed, 19 tapered and haunched members, 20 member inspector, 21 member end releases, 22 moving-support ghosts, 23 decluttering (Labels control, load picking, tests), 24 node inspector, inspector tab, theme button and surprising-behaviour examples, 25 mechanism mode, snapshot overlay, mechanism and remarkable-structure examples. They share one global scope, so order matters. |
+| `css/` | seventeen style sheets, in cascade order: base, v1.21 theme, v1.24 neon, v1.26 layout, v2.2 popups/flyouts, v2.5 welcome guide, v2.6 loads, v2.7 example gallery, v2.8 save / open files, v2.9 tapered members, v2.9.1 member inspector, v2.10 member end releases, v2.11 unstable warning and home button, v2.12 Labels control, v2.13 node inspector, inspector tab and theme button, v2.14 mechanism panel and snapshot, v2.15 integration chain, energy, indeterminacy, solve stepper and unit-load panels |
+| `js/` | twenty-eight script modules, in the run order listed in `page.html`: 01 setup … 13 report, 13b report decluttering (v2.12), 13a load direction / self-weight, 14 start-up, 15 welcome guide, 16 example gallery, 17 save / open files, 18 joining collinear members when a node is removed, 19 tapered and haunched members, 20 member inspector, 21 member end releases, 22 moving-support ghosts, 23 decluttering (Labels control, load picking, tests), 24 node inspector, inspector tab, theme button and surprising-behaviour examples, 25 mechanism mode, snapshot overlay, mechanism and remarkable-structure examples, 26 integration chain, strain energy, indeterminacy, solve stepper and unit-load method. They share one global scope, so order matters. |
 | `build.mjs` | replaces each marker with the file's contents, verbatim |
 
 ## Build
@@ -27,7 +27,7 @@ Edit a module, rebuild, run the in-app tests (Verification tests in the top bar)
 
 The version lives in three places, and `build.mjs` checks that they agree: `VER` at the end of `js/09-help.js`, the `<title>` and the top-bar label in `page.html`. The changelog is `js/10-changelog.js`; the About build date is in `js/11-undo-sections-solver.js`.
 
-If the Project copies are ever out of step with the published page, the modules can be recovered from the published page itself: the build inserts each file verbatim, so splitting the page's `<style>` and `<script>` at each module's first line gives the modules back (v2.13 was rebuilt this way, byte for byte, from the v2.12 page). For v2.14 the page was built the same way from the v2.13 page: `js/09` (which starts at `function showMethod`), `js/10` and `js/11` were swapped for their new versions and the two new files inserted before `</style>` and `</script>`, which is what `build.mjs` produces from the updated `page.html`.
+If the Project copies are ever out of step with the published page, the modules can be recovered from the published page itself: the build inserts each file verbatim, so splitting the page's `<style>` and `<script>` at each module's first line gives the modules back (v2.13 was rebuilt this way, byte for byte, from the v2.12 page). For v2.14 (and v2.15) the page was built the same way from the previous page: `js/09` (which starts at `function showMethod`), `js/10` and `js/11` were swapped for their new versions and the two new files inserted before `</style>` and `</script>`, which is what `build.mjs` produces from the updated `page.html`.
 
 ## Notes by version
 
@@ -64,3 +64,12 @@ If the Project copies are ever out of step with the published page, the modules 
   - *Fix* — `nodeData` is wrapped: when every force at a joint is below 1e-6 kN, the residual is the absolute sum, not the sum divided by a 1e-9 floor.
   - `#ctb` and `#mech` are centred at `calc(50% − 130px)` to stay clear of `#dock`.
   - js/25 appends 43 verification tests (458 in total, all passing at release).
+- **v2.15 "Workings":** (`js/26-workings.js`, `css/17-v2.15-workings.css`)
+  - *Shared* — `glInt(L, f)` integrates over an element by 5-point Gauss–Legendre on two halves (exact to degree 9, so M², N², M·m are exact for every load the solver supports). `elSlope(el, x)` is the analytic slope dv/dx (Hermite derivatives plus the particular solution); `elQ` / `elP` give the transverse and axial load intensity.
+  - *Integration chain* — `chainData(m, r)` (pure) samples q, V, M, θ, w along a straight member's elements and returns the integrals `I` and the end-to-end changes `D` of each step; `chainHTML` / `chainSvg` draw it into `#sideIc` (a `<details>` inserted before `#sideSf` in `#sideMain`). `sideUpdate` is wrapped (`icUpdate`), cached on the HTML string.
+  - *Strain energy* — `elEnergy(el)` and `energyOf(r)` (pure: `Ub`, `Ua`, `Us`, `U`, per member `mem`, per element `els` with energy per metre `d`, springs `sp`); `workOf(r)` is ½ the work of nodal loads, element loads (∫q v + p u) and the reactions at settled supports. `#sE` (bottom bar, after Axial) sets `EN.on`; `enDraw()` colours elements with `enColor(t)`, t = √(d / d_max). The Info panel section is `#enS` / `#enSB`.
+  - *Indeterminacy* — `indet(r)` (pure) counts b (3 per beam element, 1 per taut cable), r (support restraints at DOFs a member reaches), kₛ (`KM.sp.size`) and e (distinct DOFs referenced by active elements: all six for a beam, the four translations for a cable), adds the mechanism count from `mechModes` when unstable, and returns `{s, m, nb, nr, ne, nsp, k, ns}`. Section `#indS` / `#indSB`, after Solver status.
+  - *Solve stepper* — `ssBuild(r)` (pure) recomputes from `KM.K`, `KM.F` and `KM.fx` alone: the fixed DOFs and why, `Kff`, `Ff` (with the settlement term), a snapshot of the reduced matrix after every pivot (`steps`, `piv`, `mul`; up to 80 free DOFs, `big` above), forward and back substitution (`Y`, `X`), `u`, reactions `R` and element forces `E`. The panel `#ssOv` is built on first use by `ssOpen()`; `ssRender()` draws the stage `SS.st` (0–5) with `ssMat` / `ssVec` (numbers up to 14 × 14, coloured cells beyond). `#mSs` sits after `#mHm` in the top bar. The panel notes when the model has changed since it was built (`SS.sig` against `ser()`).
+  - *Unit-load method* — `vwCalc(r, n, c)` (pure) solves K_ff u₁ = e with the solver's own factors (`r.M.LU`, same active cable set), takes each element's unit-load end forces f = k T u₁, integrates M m / EI and N n / EA, adds k·u·u₁ for springs and −r₁Δ for imposed settlements, and returns δ with the parts and the solver's `u`. `nodeHTML` is wrapped to append `vwHTML(n)`; clicks on `button[data-vw]` and `input[data-vws]` in `#sideNode` set `VW.c` / `VW.show`. `vwDraw()` draws the unit load and the m diagram.
+  - `drawLoads` is wrapped once more: energy and unit-load drawing before it, the Info panel sections and the stepper's stale note after it. `#ctb` gets `left:max(calc(50% − 130px), 345px)`.
+  - js/26 appends 47 verification tests (505 in total, all passing at release).
