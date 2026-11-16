@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Frame Pusher v2.15 – Workings</title>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Frame Pusher v2.16 – Coincide</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{--bg:#f1ebfc;--panel:#fbf9ff;--ink:#241838;--mut:#6d6188;--line:#d8cbf0;--mem:#43376a;--acc:#7c3aed;--grid:#d3c5ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -383,7 +383,24 @@ table.ssM td.ssPv{outline:2px solid #ffb020;outline-offset:-2px;font-weight:700}
 table.ssL{border-collapse:collapse;font-size:12px;margin:4px 0}table.ssL td,table.ssL th{padding:2px 10px 2px 0;text-align:left;border-bottom:1px solid color-mix(in srgb,var(--line) 50%,transparent)}
 /* keep the canvas toolbar inside the canvas when the inspector narrows it */
 #ctb{left:max(calc(50% - 130px),345px)}
-</style></head><body><nav id="top"><a id="home" href="https://ankacha.github.io/" title="Home – ankacha.github.io" aria-label="Home (ankacha.github.io)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><span class="tt">▦ Frame Pusher</span><small style="color:var(--mut);margin-right:8px">v2.15</small></nav>
+
+/* ===== v2.16 "Coincide": model-check button in the canvas toolbar and the Check model panel ===== */
+#coB{color:#ffb020;border-color:color-mix(in srgb,#ffb020 60%,var(--line))!important;font-weight:600;animation:coPulse 2.4s ease-in-out infinite}
+#coB[hidden]{display:none}
+@keyframes coPulse{50%{box-shadow:0 0 12px color-mix(in srgb,#ffb020 55%,transparent)}}
+@media (prefers-reduced-motion:reduce){#coB{animation:none}}
+#vb .coTop{margin:0 0 10px;line-height:1.45}
+#vb .coBad{color:#ffb020}
+#vb .coOk{color:#12d98a}
+#vb .coTop button{margin-left:6px}
+#vb .coS{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;background:color-mix(in srgb,var(--panel) 70%,transparent)}
+#vb .coH{display:flex;align-items:center;gap:8px}
+#vb .coH button{margin-left:auto}
+#vb .coN{display:inline-block;min-width:20px;padding:0 6px;border-radius:9px;background:color-mix(in srgb,#ffb020 22%,transparent);color:#ffb020;font-size:11.5px;text-align:center}
+#vb .coS p{margin:4px 0;color:var(--mut);font-size:12.5px;line-height:1.4}
+#vb .coL{margin:2px 0 0;padding-left:18px;font-size:12.5px}
+#vb .coFt{margin:8px 0 0;color:var(--mut);font-size:11.5px}
+</style></head><body><nav id="top"><a id="home" href="https://ankacha.github.io/" title="Home – ankacha.github.io" aria-label="Home (ankacha.github.io)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><span class="tt">▦ Frame Pusher</span><small style="color:var(--mut);margin-right:8px">v2.16</small></nav>
 <aside id="tools"><button id="menuB">☰ Menu</button><div id="menu" hidden><button id="mVer">✓ Verification tests</button><button id="mNew">New / clear canvas</button><button id="mIO">Save / load as text</button><button id="mKeys">Keyboard shortcuts</button><button id="mAbout">About &amp; changelog</button><button id="mMeth">Method &amp; assumptions</button></div><div class="gh" style="margin-top:2px">Example structures</div><select id="pre"><option value="">Load example…</option></select></aside>
 <main><div id="mid"><div id="wrap"><canvas id="cv"></canvas><div id="dock"><div id="dsb"><button id="dsT" title="Scale the on-screen size of the diagrams and loads"><span>⇕ Diagram scale</span><span id="dsA">▾</span></button><div id="dsB"></div></div><div id="info"><button id="infoT">▾ Info panel</button><div id="infoB"><div id="coord"></div><details open class="ip"><summary>Results</summary><div id="read"></div></details><details open class="ip"><summary>Solver status</summary><div id="fea"></div></details><details id="dg"><summary><i class="dot" id="dgDot" style="background:var(--line)"></i> Matrix diagnostics <b id="dgSum"></b></summary><div id="dgBody"></div></details><details open class="ip"><summary>Hint</summary><div id="hint"></div></details></div></div></div><label id="lgT"><input type="checkbox" id="sL" checked>Legend</label><div id="ctb"><button id="undo" title="Undo (Ctrl+Z)">↶ Undo</button><button id="redo" title="Redo (Ctrl+Y)">↷ Redo</button><button id="fit" title="Fit view (F)">⤢ Fit</button><button id="dup" title="Copy the selection (or the whole structure) and paste it into free space">⧉ Duplicate</button><button id="clr">Clear loads</button><button id="theme" title="Switch theme">◐ Theme</button><label title="Keep a dragged load in place when you let go, instead of it springing back to zero"><input type="checkbox" id="latch">Keep loads on release</label></div><div id="tchip" class="off"></div><div id="pop" hidden></div></div><aside id="side" hidden><div id="sideH"><b>Interrogate member</b><span><button id="sideC" title="Collapse or expand the panel">»</button><button id="sideX" title="Close the panel">✕</button></span></div><div id="sideB"><div id="sideMsg">Select a member to interrogate it.</div><div id="sideMain" hidden><div id="sideSel"></div><div style="margin-top:4px">Position along member (A → B)<input type="range" id="psl" min="0" max="1" step="0.0025" value="0.5"></div><div id="sideCh"></div><details open id="sideSf"><summary>Shape functions &amp; interpolation</summary><div id="pshape"></div></details></div></div></aside></div>
 <div class="bar b">
@@ -1817,8 +1834,9 @@ $('mKeys').onclick=()=>{$('menu').hidden=true;showKeys()};
 addEventListener('keydown',e=>{const t=document.activeElement,tg=t&&t.tagName;if(tg=='INPUT'||tg=='SELECT'||tg=='TEXTAREA'||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase(),tk=Object.keys(KEYS).find(x=>KEYS[x]==k);
  if(tk){tool=tk;first=null;if(tk!='sel')sel=null;buildPop();draw();return}if(k=='f'){fit();return}
  if(k.startsWith('arrow')&&sel&&(sel.t=='n'||sel.t=='multi'||sel.t=='a')){e.preventDefault();const d=(e.shiftKey?5:1)*gs,dx=k=='arrowright'?d:k=='arrowleft'?-d:0,dy=k=='arrowup'?d:k=='arrowdown'?-d:0,ns=new Set(sel.t=='n'?[sel.n]:sel.t=='multi'?sel.nodes:[]);if(sel.t=='multi')sel.members.forEach(m=>{ns.add(m.a);ns.add(m.b)});const as=sel.t=='a'?[sel.a]:sel.t=='multi'?[...(sel.anns||[])]:[];pushU();ns.forEach(n=>{n.x=+(n.x+dx).toFixed(6);n.y=+(n.y+dy).toFixed(6)});as.forEach(a=>{a.x1+=dx;a.x2+=dx;a.y1+=dy;a.y2+=dy});draw()}});
-const VER='2.15',VNAME='Workings';
+const VER='2.16',VNAME='Coincide';
 const CHANGELOG=[
+['2.16','Coincide',['Joining nodes: drag a node to within about 12 px of another node and it snaps exactly onto it, with a dashed ring and “release to join to n3”; let go and the two become one node. Drop it on a member instead and it snaps onto the member (to a grid point on it where there is one) and the member is split there and connected. Hold Alt while dragging to place a node freely. Before, a node dropped on another stayed a separate node underneath it, and a node dropped on a member was not connected to it: the canvas looked joined but the structure was not.','When two nodes are joined, nothing is silently lost: supports combine by their restraints (roller V + roller H = pin, anything + fixed = fixed), springs at the point add direction by direction (a spring in a direction now held rigidly is dropped), point loads and moments add, an imposed settlement is carried over (if both had one, the node that stayed put keeps its own) and so is the joint type of that node. A member between the two nodes has no length left and is removed; an exact copy of another member (same section, loads and releases, drawn either way round) is removed; two different members now between the same nodes are both kept and reported. The joined node takes the lower of the two node numbers. A message says what happened, and one undo separates them again.','The same joining applies when a group of selected items is dragged (the group snaps so that one of its nodes lands on another node), when nodes are nudged with the arrow keys, and when the Node, Member, Curved or Cable tools snap a click onto a grid point where a node already is (before, a second node was made on top of the first when zoomed in).','Check model: ⚑ Check model in the top bar lists the faults that look fine on the canvas but change the answer – nodes on top of each other that are not joined, zero-length members, duplicate members, straight members overlapping along one line, nodes lying on a member without being connected, and (for information) nodes with no members – with what each does to the analysis, a Fix button for each kind (join, delete, delete exact copies, connect) and Fix all, all undoable. While there are any, a ⚠ button in the canvas toolbar counts them. Opening a model file and opening the report warn when the model has any.','Analysis: a zero-length member is now left out of the analysis. It used to make the stiffness matrix singular, so the structure read as unstable with several spurious mechanisms; the model check reports it instead.','Undo: a click that changes nothing, such as selecting an item or clicking empty canvas, no longer adds an undo step, and no longer throws away the redo history after an undo.','The Delete tool (not on the tool bar, kept for older shortcuts) now joins two in-line members at a node like the Delete key (v2.8.1).','Verification: 65 new tests (two cantilevers joined end to end against PL³/3EI, support, spring, load and settlement combination, zero-length and duplicate members, arcs, node numbering, a post connected to a beam it stood on, the zero-length guard, every kind of model-check finding and Fix all with its undo, real drags onto a node and onto a member, Alt, group drags, arrow-key nudges, the Node, Member and Delete tools, the undo and redo history, and every example free of model-check problems), 570 in all.']],
 ['2.15','Workings',['Integration chain in the member inspector: for a straight member, five stacked plots along its length – load q, shear V, moment M, slope θ and deflection w – each the integral of the one above (the slope is the integral of M/EI), with the relation both ways (V = V(0) + ∫q dx, q = dV/dx), the values at each end, the constants of integration at end A and a table checking each step: ∫q dx = V(B) − V(A), ∫V dx = M(B) − M(A), ∫M/EI dx = θ(B) − θ(A) and ∫θ dx = w(B) − w(A). Tapered members are included; cables and curved members say why they are not.','Strain energy: a Strain energy section in the Info panel gives the energy stored in the structure, U = Σ∫M²/2EI dx + Σ∫N²/2EA dx + ΣF²/2k, split into bending, axial and springs, checked against the work done by the loads (½ΣP·δ, including distributed loads and imposed settlements), and lists the members that store the most with their share and how much of it is bending. Energy in the bottom bar colours every member by its energy per metre, from blue (little) to red (most), and labels the three biggest shares.','Degree of indeterminacy: a new Info panel section says whether the structure is statically determinate or indeterminate and to what degree, with the count behind it: s = b + r + kₛ − e (+ m), member force components, reactions and spring forces against the equilibrium equations, plus the number of mechanisms. It also gives the kinematic degree, the number of unknown displacements the stiffness method solves for, and says when the canvas holds several separate structures.','Solve step by step: ⇶ Solve steps in the top bar opens a panel that rebuilds the solution from the stiffness matrix in six stages – the assembled K and F; the supports, listing every fixed DOF and why, and the partitioned K_ff with the settlement term K_fs·u_s; symmetric elimination pivot by pivot, with each pivot, its share of the original diagonal, the multipliers and the matrix as the zeros appear below the diagonal; forward and back substitution, with each displacement’s equation and numbers; the reactions R = K u − F and their sums; and each element’s end forces f = k T u − f_e, with every vector and matrix. A slider, ◂ ▸ (or the arrow keys) and Play step through the elimination, the substitution and the elements. Numbers are printed up to 14 DOFs; larger matrices are shown as coloured cells with the values on hover; models over 80 free DOFs show the first two stages only.','Unit-load method in the node inspector: choose δx, δy or θ and the panel works out that displacement by virtual work, δ = Σ∫Mm/EI dx + Σ∫Nn/EA dx + ΣFf/k − ΣrΔ, member by member, with springs and imposed settlements, and compares it with the stiffness solution. The unit load and its moment diagram m are drawn on the canvas.','The canvas toolbar stays inside the canvas when the inspector panel narrows it.','Verification: 47 new tests (the integration chain against closed form and closed for every straight member of every example; strain energy against w²L⁵/240EI, P²L³/6EI, P²L/2EA and F²/2k, and equal to the work done by the loads in every loaded example; the degree of indeterminacy of beams, frames, arches, trusses, a Vierendeel girder, springs and mechanisms; the solve stepper’s own displacements, reactions and member forces against the solver, and its pivots against det K_ff; the unit-load method against 5wL⁴/384EI and wL³/24EI and against the stiffness solution at every free DOF of every example), 505 in all.']],
 ['2.14','Mechanism',['Mechanism mode: when a structure is unstable it no longer just says so – the canvas plays the way it can move, a rocking dashed amber shape with the most-moving node marked by arrows, drawn with the same shape functions as the deflected shape. These are the mechanisms of the structure: every independent movement in which no member bends or stretches, found as the null space of the stiffness matrix (symmetric elimination of the diagonally scaled K, skipping the zero pivots). A panel at the top of the canvas says how many there are, steps through them with ◂ ▸, names the node that moves most and in which direction, and hides the shape; the Info panel explains what to add. Slack cables count: a guy that goes slack shows the mast falling over. The motion stops if the system asks for reduced motion.','Snapshot: ◫ Snapshot in the canvas toolbar pins the current results as a ghost. Change anything – a support, a section, a load, the geometry – and the old deflected shape (grey dotted) and the ticked moment, shear and axial diagrams (violet dashed) stay on the canvas, drawn to the same scale as the live diagrams so the two can be compared directly (reduced, and said so, only if the ghost would run off the canvas). The undeformed members of the snapshot are shown too if the geometry has changed. The Info panel gets a table of peak deflection, maximum moment, shear and axial force and the largest reaction, then and now, with the change in per cent. Ghost hides it, ◫ Retake replaces it, ✕ clears it; loading an example clears it.','Mechanisms: a new group of seven examples, each with a caption – a beam on two rollers, reactions that all pass through one point, a hinge in a simply supported beam, a portal frame with four hinges, a truss with one diagonal missing, a guyed pole whose cable goes slack, and two bars in a straight line (an infinitesimal mechanism).','Remarkable structures: a new group of four – a funicular (parabolic) arch against a circular arch under the same loads (0.24 against 13.6 kNm), a Bollman truss, a balanced cantilever bridge on the Forth Bridge principle, and a sailing mast with spreaders and shrouds. All eleven are in the drop-down and the gallery.','Node inspector fix: a joint where every force is zero (a spreader tip whose wires are both slack) showed round-off as a 1e-4 residual; it now reads as in equilibrium.','The canvas toolbar and the new mechanism panel are centred in the part of the canvas left of the docked Diagram scale and Info panels, so the longer toolbar no longer runs under them.','Verification: 43 new tests (the mechanism of each example against its known movement – a slide, a rotation about the pin, a fold at the hinge, a parallelogram sway – with zero strain energy; three rigid-body modes of an unsupported frame; two independent mechanisms; every mechanism example unstable and every other example stable; snapshot statistics against closed form; the funicular arch thrust wL²/8f, the cantilever bridge moments and the Bollman and mast load paths), 458 in all.']],
 ['2.13','Nodes',['Node inspector: with the side panel open, select a node to interrogate it like a member. It shows the joint as a free body – its position, support, joint type, springs and settlement; its displacements and the rotation of every member end that meets there (released ends turning on their own); a drawing of the joint with the force each member end, the applied load, the support and any spring puts on it, to scale; a table of those forces in global axes with their sum, which is zero when the joint is in equilibrium; the member end forces in member axes (N, V, M); and, folded away, the node’s own 3 × 3 block of the stiffness matrix with the fixed DOFs greyed. The node popup has a Node inspector tick box, as the member popup has a Member inspector one, and the panel title says which it is showing.','Inspector tab: while the side panel is closed, a ‹ Inspector tab on the right edge of the canvas opens it; the I key opens and closes it. With nothing selected the panel asks for a member or a node.','Theme: the Theme button has moved from the canvas toolbar to the right-hand end of the top bar, as a sun (switch to light) or moon (switch to dark) icon, and the choice is now remembered in this browser.','Surprising behaviour: a new group of nine examples, each a side-by-side comparison with a caption explaining the surprise – a stiffer beam suffers more from settlement, loading one span lifts the next and pulls on the far support, less load gives more moment (pattern loading), adding a load at the tip of an overhang reduces the deflection, hinges at the points of contraflexure change nothing, a vertical load makes a frame with unequal columns sway, the short column takes almost all the sway, members that carry nothing but are still needed, and the flatter the cable, the harder it pulls. They are in the drop-down and the gallery.','Verification: 43 new tests (joint equilibrium of every node of every example, end shears, spring forces, released ends, hinges and cable joints against closed form, the node stiffness block, each surprising example against its closed-form result, the theme button and the tab), 415 in all.']],
@@ -1862,7 +1880,7 @@ const CHANGELOG=[
 ['1.2','Violet',['Moment load tool.','Tools moved to a left-hand panel; purple colour scheme.','Undo (Ctrl+Z), scroll zoom, right-drag pan, Fit view, light / dark toggle, hover highlight, rubber-band line and colour legend dots.']],
 ['1.1','Icons',['Deflected shape now grows gradually with load instead of snapping to a fixed maximum.','Separate support buttons (pin, roller, fixed, free) and icons on every tool.']],
 ['1.0','First Push',['First release: draw nodes and members, add pin, roller and fixed supports.','Point load and UDL tools to push and pull the structure interactively.','Live deflected shape, bending moment and shear diagrams and reaction arrows; relative member stiffness slider.']]];
-function showAbout(){let h='<p style="margin:0 0 8px"><b>Frame Pusher</b> v'+VER+' "'+VNAME+'" \u00b7 build of 11 Nov 2026</p><p style="margin:0 0 8px;color:var(--mut)">An interactive 2D frame, beam, arch and cable-truss analyser. Draw a structure, add supports, then push and pull it with point, moment and distributed loads to see the deflected shape, bending moment, shear, axial force and reactions update live. Linear-elastic direct-stiffness analysis with Euler\u2013Bernoulli beam elements; see Method &amp; assumptions and Verification tests in the Menu. Runs entirely in your browser as a single static file with no external dependencies. Created with Claude (Anthropic) in an iterative design session.</p><p style="margin:0 0 4px;color:var(--mut);font-size:12px">Results are for exploration and teaching; they are not a substitute for a checked design calculation.</p><h4 style="margin:14px 0 2px;color:var(--acc)">Changelog</h4>';
+function showAbout(){let h='<p style="margin:0 0 8px"><b>Frame Pusher</b> v'+VER+' "'+VNAME+'" \u00b7 build of 16 Nov 2026</p><p style="margin:0 0 8px;color:var(--mut)">An interactive 2D frame, beam, arch and cable-truss analyser. Draw a structure, add supports, then push and pull it with point, moment and distributed loads to see the deflected shape, bending moment, shear, axial force and reactions update live. Linear-elastic direct-stiffness analysis with Euler\u2013Bernoulli beam elements; see Method &amp; assumptions and Verification tests in the Menu. Runs entirely in your browser as a single static file with no external dependencies. Created with Claude (Anthropic) in an iterative design session.</p><p style="margin:0 0 4px;color:var(--mut);font-size:12px">Results are for exploration and teaching; they are not a substitute for a checked design calculation.</p><h4 style="margin:14px 0 2px;color:var(--acc)">Changelog</h4>';
  CHANGELOG.forEach(c=>{h+='<h5 style="margin:10px 0 2px;color:var(--acc)">v'+c[0]+' \u2013 '+c[1]+(c[0]==VER?' (current)':'')+'</h5><ul style="margin:0;padding-left:18px">'+c[2].map(x=>'<li>'+x+'</li>').join('')+'</ul>'});showV('About',h)}
 $('mAbout').onclick=()=>{$('menu').hidden=true;showAbout()};
 let U=[],R2=[];const ser=()=>JSON.stringify(dump());
@@ -4306,5 +4324,213 @@ $('enS')&&$('enS').addEventListener('toggle',()=>{WK.es='';draw()});
   Y('Interface: Solve steps button, Energy toggle, Indeterminacy and Strain energy sections, integration chain panel',!!$('mSs')&&!!$('sE')&&!!$('indS')&&!!$('enS')&&!!$('sideIc'));
  }catch(e){out.push({name:'v2.15: '+e.message,exp:1,got:0,tol:0,ok:false})}
  nodes=sv[0];members=sv[1];ann=sv[2];sel=sv[3];swS().on=sv[4];res=sv[5];interr=sv[6];return out}}
+
+/* ===== v2.16 "Coincide": nodes that meet are joined, and the model is checked for hidden faults =====
+   - Joining nodes: a node dragged to within 12 px of another node snaps exactly onto it (a ring and "release to join"
+     show the target) and is joined to it on release; dragged onto a member, it snaps onto the member and the member is
+     split there and connected. Group drags, arrow-key nudges and the Node and Member tools join the same way. Alt
+     places a node freely (no snapping to nodes or members); an exact landing on a node still joins.
+     coJoin(keep, gone) (tested) moves every member end at `gone` to `keep` and combines what the two nodes carried:
+     supports by the union of their restraints (roller V + roller H = pin, anything + fixed = fixed), springs added
+     per direction (springs at one point act in parallel; a spring in a direction now held rigidly is dropped), loads
+     added, settlement and hinge kept from `keep` when they differ. A member between the two (now zero length) is
+     removed, an exact copy of another member is removed, and two different members between the same nodes are kept
+     and reported. The joined node takes the lower of the two node numbers. One undo step.
+   - Model check: coFind() (tested) lists nodes on top of each other that are not joined, zero-length members,
+     duplicate members, straight members that overlap along one line, nodes lying on a member without being
+     connected, and nodes with no members. A ⚠ button in the canvas toolbar counts the problems and ⚑ Check model in
+     the top bar opens the list, with a Fix button for each kind and Fix all. Opening a file and opening the report
+     warn when there are problems.
+   - Solver guard: a zero-length member is left out of the analysis (it used to make the stiffness matrix singular
+     and the structure read as unstable with spurious mechanisms); the model check reports it.
+   - Undo: a click that changes nothing (selecting, a click on empty canvas) no longer adds an undo step or clears
+     the redo history.
+   - The Delete tool joins in-line members like the Delete key (v2.8.1). */
+const CO={tol:1e-6,px:12,tgt:null,u0:null,sig:'',f:null};
+const coSame=(a,b)=>Math.abs(a.x-b.x)<=CO.tol&&Math.abs(a.y-b.y)<=CO.tol;
+const coLab=n=>'n'+(nodes.indexOf(n)+1);
+const coMl=m=>'m'+(members.indexOf(m)+1);
+const CO_SUP={none:'',pin:'xy',ry:'y',rx:'x',fix:'xyr'};
+/* union of the restraints of two supports */
+function coSupJoin(s1,s2){const u=new Set([...(CO_SUP[s1]||''),...(CO_SUP[s2]||'')]);if(u.has('r'))return'fix';return u.has('x')&&u.has('y')?'pin':u.has('x')?'rx':u.has('y')?'ry':'none'}
+/* a member's properties as seen from one end, so that copies drawn either way round compare equal */
+function coCanon(m,rev){const nl=(m.wd||'n')=='n',s=rev&&nl?-1:1,w=m.w||0,we=m.we===undefined?w:m.we;
+ return JSON.stringify([m.type||'beam',m.EI,m.EA===undefined?0:m.EA,m.sec||null,(m.r||0)*(rev?-1:1)+0,m.np?(rev?'rev':'')+JSON.stringify(m.np):null,!!(rev?m.hb:m.ha),!!(rev?m.ha:m.hb),m.wd||'n',m.wp||'t',(rev?we:w)*s+0,(rev?w:we)*s+0])}
+const coRev=(p,q)=>p.a!==q.a;
+const coSameArc=(p,q)=>(p.r||0)===(coRev(p,q)?-(q.r||0):(q.r||0));
+function coIdent(p,q){return coCanon(p,false)===coCanon(q,coRev(p,q))}
+/* join node `gone` into node `keep`; returns what happened, or null */
+function coJoin(keep,gone){if(!keep||!gone||keep===gone||!nodes.includes(keep)||!nodes.includes(gone))return null;const o={notes:[],zl:0,dup:0,ov:0};
+ const s0=keep.sup||'none',s1=gone.sup||'none';keep.sup=coSupJoin(s0,s1);
+ if(s0!='none'&&s1!='none'&&s0!=s1)o.notes.push('supports combined into '+({pin:'a pin',fix:'a fixed support',rx:'a roller',ry:'a roller'}[keep.sup]||keep.sup));else if(s0=='none'&&s1!='none')o.notes.push('its support kept');
+ if(gone.spr&&(gone.spr.x||gone.spr.y||gone.spr.r)){const a=keep.spr||{},b=gone.spr;if(keep.spr&&(a.x||a.y||a.r))o.notes.push('springs added');keep.spr={x:(a.x||0)+(b.x||0),y:(a.y||0)+(b.y||0),r:(a.r||0)+(b.r||0)}}
+ if(keep.spr){const c=CO_SUP[keep.sup]||'';let lost=0;for(const d of 'xyr')if(c.includes(d)&&keep.spr[d]){keep.spr[d]=0;lost++}if(lost)o.notes.push('a spring in a direction now held rigidly was removed');normSpr(keep)}
+ if(gone.sd){if(keep.sd&&Math.abs(keep.sd-gone.sd)>1e-12)o.notes.push('the two imposed settlements differed: the one at the node that stayed put was kept');else keep.sd=gone.sd}
+ if(!RIG(keep))keep.sd=0;
+ if(!!gone.hinge!==!!keep.hinge)o.notes.push(keep.hinge?'the joint stays hinged':'the joint stays rigid');
+ const L=gone.load;if(L&&(L.fx||L.fy||L.m)){const K=keep.load||{fx:0,fy:0,m:0};if(K.fx||K.fy||K.m)o.notes.push('loads added');keep.load={fx:(K.fx||0)+(L.fx||0),fy:(K.fy||0)+(L.fy||0),m:(K.m||0)+(L.m||0)}}
+ members.forEach(m=>{if(m.a===gone)m.a=keep;if(m.b===gone)m.b=keep});
+ const zl=members.filter(m=>m.a===m.b);if(zl.length){members=members.filter(m=>m.a!==m.b);o.zl=zl.length}
+ const at=members.filter(m=>m.a===keep||m.b===keep),rm=new Set();
+ for(let i=0;i<at.length;i++)for(let j=i+1;j<at.length;j++){const p=at[i],q=at[j];if(rm.has(p)||rm.has(q))continue;const op=p.a===keep?p.b:p.a,oq=q.a===keep?q.b:q.a;if(op!==oq||!coSameArc(p,q))continue;if(coIdent(p,q))rm.add(q);else o.ov++}
+ if(rm.size){members=members.filter(m=>!rm.has(m));o.dup=rm.size}
+ const ig=nodes.indexOf(gone);nodes.splice(ig,1);const ik=nodes.indexOf(keep);if(ig<ik){nodes.splice(ik,1);nodes.splice(ig,0,keep)}
+ if(sel){if(sel.t=='n'&&sel.n===gone)sel={t:'n',n:keep};else if(sel.t=='multi'){sel.nodes.delete(gone);sel.members.forEach(m=>{if(!members.includes(m))sel.members.delete(m)})}else if(sel.t=='m'&&!members.includes(sel.m))sel=null;else if((sel.t=='pl'||sel.t=='ml')&&sel.n===gone)sel=null}
+ if(first===gone)first=keep;o.keep=keep;return o}
+/* a node lying on the inside of a straight member it is not connected to: {m, t, ok}; ok when it can be split there */
+function coOnMem(n,ex,all){const out=[];for(const m of members){if(m.r||m.a===n||m.b===n||(ex&&(ex.has(m.a)||ex.has(m.b))))continue;const dx=m.b.x-m.a.x,dy=m.b.y-m.a.y,L2=dx*dx+dy*dy;if(L2<1e-18)continue;
+ const L=Math.sqrt(L2),t=((n.x-m.a.x)*dx+(n.y-m.a.y)*dy)/L2;if(t*L<=CO.tol||(1-t)*L<=CO.tol)continue;if(Math.abs((n.x-m.a.x)*dy-(n.y-m.a.y)*dx)/L>CO.tol)continue;
+ const r={m,t,ok:t>.04&&t<.96};if(!all&&r.ok)return r;out.push(r)}return all?out:null}
+/* land the given (moved) nodes: join each to a node it now sits on, or connect it to a member it sits on */
+function coLand(mv,hint){const out=[],set=new Set(mv);
+ mv.forEach(n=>{if(!nodes.includes(n))return;let t=null;if(hint&&hint.t=='n'&&hint.n!==n&&nodes.includes(hint.n)&&coSame(hint.n,n))t=hint.n;
+  if(!t)t=nodes.find(q=>q!==n&&!set.has(q)&&coSame(q,n));if(t){const r=coJoin(t,n);if(r)out.push(r);return}
+  let h=null;if(hint&&hint.t=='m'&&members.includes(hint.m)&&hint.m.a!==n&&hint.m.b!==n){const q=arcP(hint.m,hint.u);if(Math.hypot(q.x-n.x,q.y-n.y)<=CO.tol)h={m:hint.m,t:hint.u}}
+  if(!h)h=coOnMem(n,set);if(h&&h.t>.04&&h.t<.96){const ml=coMl(h.m),q=split(h.m,h.t),r=coJoin(n,q);if(r){r.split=ml;out.push(r)}}});
+ return out}
+/* the message after joining */
+function coSay(out){if(!out.length)return;const one=out.length==1,o=out[0],k=nodes.includes(o.keep)?coLab(o.keep):'the node',z=out.reduce((s,r)=>s+r.zl,0),d=out.reduce((s,r)=>s+r.dup,0),v=out.reduce((s,r)=>s+r.ov,0),nt=[...new Set(out.flatMap(r=>r.notes))];
+ let t=one?(o.split?k+' connected to the member it was dropped on, which is split there':'Joined at '+k):out.length+' nodes joined'+(out.some(r=>r.split)?' or connected to the members they sit on':'');
+ if(nt.length)t+=': '+nt.join(', ');if(z)t+=(nt.length?'; ':': ')+(z==1?'the member between them had no length left and was removed':z+' members with no length left were removed');
+ if(d)t+=(nt.length||z?'; ':': ')+(d==1?'a duplicate member was removed':d+' duplicate members were removed');
+ if(v)t+='. '+(v==1?'Two different members':'Some pairs of different members')+' now run between the same two nodes: check them (⚑ Check model)';
+ fioMsg(t+'. Undo to separate.',!!v)}
+/* drag target under the cursor: a node within 12 px, else a member within 8 px (not one of the dragged node's own) */
+function coTarget(n,p){let best=null,bd=CO.px;nodes.forEach(q=>{if(q===n)return;const d=Math.hypot(p[0]-sx(q.x),p[1]-sy(q.y));if(d<bd){bd=d;best={t:'n',n:q}}});if(best)return best;
+ let bm=null;bd=8;members.forEach(m=>{if(m.a===n||m.b===n)return;const P=mpts(m);for(let i=0;i<P.length-1;i++){const r=segD(p,P[i],P[i+1]);if(r.d<bd){const u=(i+r.t)/(P.length-1);if(u>.04&&u<.96){bd=r.d;bm={t:'m',m,u}}}}});return bm}
+
+/* ---------- canvas interaction ---------- */
+{const mv0=cv.onpointermove;cv.onpointermove=e=>{if(drag&&drag.t=='m'){const p=pos(e);mouse=p;mouseMoved=true;if(!drag.mv&&Math.hypot(p[0]-drag.s[0],p[1]-drag.s[1])<5)return;drag.mv=1;const n=drag.n;
+  CO.tgt=e.altKey?null:coTarget(n,p);if(CO.tgt&&CO.tgt.t=='n'){n.x=CO.tgt.n.x;n.y=CO.tgt.n.y}else if(CO.tgt){const T_=CO.tgt,m=T_.m;if(!m.r){const g={x:snap(mx(p[0])),y:snap(my(p[1]))},dx=m.b.x-m.a.x,dy=m.b.y-m.a.y,u=((g.x-m.a.x)*dx+(g.y-m.a.y)*dy)/(dx*dx+dy*dy);if(u>.04&&u<.96)T_.u=u}const q=arcP(m,T_.u);n.x=q.x;n.y=q.y}else{n.x=snap(mx(p[0]));n.y=snap(my(p[1]))}draw();return}
+ mv0(e)}}
+{const gm0=groupMove;groupMove=function(e,p){gm0(e,p);const d=drag;CO.tgt=null;if(!d||d.t!='gm'||!d.moved||e.altKey)return;const ms=new Set(d.nodes.map(x=>x[0]));let best=null,bd=CO.px;
+ d.nodes.forEach(([n])=>{const X=sx(n.x),Y=sy(n.y);nodes.forEach(q=>{if(ms.has(q))return;const dd=Math.hypot(X-sx(q.x),Y-sy(q.y));if(dd<bd){bd=dd;best=[n,q]}})});
+ if(best){const dx=best[1].x-best[0].x,dy=best[1].y-best[0].y;d.nodes.forEach(([n])=>{if(n!==best[0]){n.x=+(n.x+dx).toFixed(9);n.y=+(n.y+dy).toFixed(9)}});best[0].x=best[1].x;best[0].y=best[1].y;d.anns.forEach(([a])=>{a.x1+=dx;a.x2+=dx;a.y1+=dy;a.y2+=dy});CO.tgt={t:'n',n:best[1],many:d.nodes.length>1}}}}
+{const pd0=cv.onpointerdown;cv.onpointerdown=e=>{
+ if(tool=='del'&&e.button==0){const n=hitNode(pos(e));if(n&&mgPair(n)){sel={t:'n',n};delSel();draw();return}}
+ CO.u0=e.button==0?{len:U.length,r2:R2.slice(),s:ser()}:null;CO.tgt=null;const n0=nodes.length;
+ pd0(e);
+ if((tool=='node'||tool=='member'||tool=='arc'||tool=='cable')&&nodes.length>n0){const q=nodes[nodes.length-1],t=nodes.find(o=>o!==q&&coSame(o,q));if(t){coJoin(t,q);draw()}}}}
+{const pu0=cv.onpointerup;cv.onpointerup=e=>{const d=drag,tg=CO.tgt,u0=CO.u0;CO.tgt=null;CO.u0=null;pu0(e);let out=[];
+ if(d&&d.t=='m'&&d.mv&&nodes.includes(d.n))out=coLand([d.n],tg);else if(d&&d.t=='gm'&&d.moved)out=coLand(d.nodes.map(x=>x[0]),tg);
+ if(out.length){coSay(out);buildPop();draw()}
+ if(u0&&!drag&&ser()===u0.s){U.length=u0.len;R2.length=0;u0.r2.forEach(x=>R2.push(x))}}}
+{const co0=cancelOp;cancelOp=function(){CO.tgt=null;CO.u0=null;return co0.apply(this,arguments)}}
+/* arrow-key nudges land the same way (the nudge itself is in js/09; this listener runs after it) */
+addEventListener('keydown',e=>{const t=document.activeElement,tg=t&&t.tagName;if(tg=='INPUT'||tg=='SELECT'||tg=='TEXTAREA'||e.ctrlKey||e.metaKey||e.altKey)return;if(!/^arrow/i.test(e.key)||!sel||(sel.t!='n'&&sel.t!='multi'))return;
+ const ns=new Set(sel.t=='n'?[sel.n]:sel.nodes);if(sel.t=='multi')sel.members.forEach(m=>{ns.add(m.a);ns.add(m.b)});const out=coLand([...ns]);if(out.length){coSay(out);buildPop();draw()}});
+
+/* ---------- solver guard: zero-length members are left out ---------- */
+{const sc0=solveCore;solveCore=function(off){const z=members.filter(m=>m.a===m.b||coSame(m.a,m.b));if(!z.length)return sc0(off);const all=members;members=members.filter(m=>!z.includes(m));let r;try{r=sc0(off)}finally{members=all}r.zl=z;return r}}
+
+/* ---------- model check ---------- */
+function coOverlap(p,q){const dx=p.b.x-p.a.x,dy=p.b.y-p.a.y,L=Math.hypot(dx,dy);if(L<1e-12)return false;const ux=dx/L,uy=dy/L,off=o=>Math.abs((o.x-p.a.x)*uy-(o.y-p.a.y)*ux),pr=o=>(o.x-p.a.x)*ux+(o.y-p.a.y)*uy;
+ if(off(q.a)>CO.tol||off(q.b)>CO.tol)return false;const s1=pr(q.a),s2=pr(q.b);return Math.min(L,Math.max(s1,s2))-Math.max(0,Math.min(s1,s2))>CO.tol}
+function coFind(){const f={co:[],zl:[],dup:[],ov:[],on:[],iso:[]},N=nodes.length;
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)if(coSame(nodes[i],nodes[j]))f.co.push([nodes[i],nodes[j]]);
+ members.forEach(m=>{if(m.a===m.b||coSame(m.a,m.b))f.zl.push(m)});
+ const used=new Set();members.forEach(m=>{used.add(m.a);used.add(m.b)});nodes.forEach(n=>{if(!used.has(n))f.iso.push(n)});
+ const M=members.filter(m=>!f.zl.includes(m));
+ for(let i=0;i<M.length;i++)for(let j=i+1;j<M.length;j++){const p=M[i],q=M[j];if((p.a===q.a&&p.b===q.b)||(p.a===q.b&&p.b===q.a)){if(coSameArc(p,q))f.dup.push([p,q,coIdent(p,q)]);continue}if(p.r||q.r)continue;if(coOverlap(p,q))f.ov.push([p,q])}
+ nodes.forEach(n=>coOnMem(n,null,true).forEach(h=>f.on.push([n,h.m,h.t,h.ok])));return f}
+const coCount=f=>f.co.length+f.zl.length+f.dup.length+f.ov.length+f.on.length;
+function coSigOf(){const ix=new Map();nodes.forEach((n,i)=>ix.set(n,i));return nodes.map(n=>n.x+','+n.y).join(';')+'|'+members.map(m=>ix.get(m.a)+','+ix.get(m.b)+','+(m.r||0)).join(';')}
+function coGet(){const s=coSigOf();if(s!==CO.sig||!CO.f){CO.sig=s;CO.f=coFind()}return CO.f}
+/* fixes; each returns how many things it changed */
+const CO_FIX={
+ co(){let k=0,g=0;for(;g<1e4;g++){let pr=null;for(let i=0;i<nodes.length&&!pr;i++)for(let j=i+1;j<nodes.length;j++)if(coSame(nodes[i],nodes[j])){pr=[nodes[i],nodes[j]];break}if(!pr)break;if(coJoin(pr[0],pr[1]))k++;else break}return k},
+ zl(){const n=members.length;members=members.filter(m=>!(m.a===m.b||coSame(m.a,m.b)));return n-members.length},
+ dup(){const rm=new Set();coFind().dup.forEach(([p,q,id])=>{if(id&&!rm.has(p))rm.add(q)});members=members.filter(m=>!rm.has(m));return rm.size},
+ on(){let k=0;for(let g=0;g<1e4;g++){let h=null,n=null;for(const q of nodes){const r=coOnMem(q,null);if(r){h=r;n=q;break}}if(!h)break;const s=split(h.m,h.t);if(!coJoin(n,s))break;k++}return k},
+ iso(){const used=new Set();members.forEach(m=>{used.add(m.a);used.add(m.b)});const n=nodes.length;nodes=nodes.filter(q=>used.has(q));if(sel&&sel.t=='n'&&!nodes.includes(sel.n))sel=null;return n-nodes.length},
+ all(){return CO_FIX.co()+CO_FIX.zl()+CO_FIX.dup()+CO_FIX.on()}};
+function coFix(k){pushU();const n=CO_FIX[k]();CO.f=null;if(sel&&sel.t=='multi'){sel.nodes.forEach(q=>{if(!nodes.includes(q))sel.nodes.delete(q)});sel.members.forEach(m=>{if(!members.includes(m))sel.members.delete(m)})}else if(sel&&sel.t=='m'&&!members.includes(sel.m))sel=null;buildPop();draw();return n}
+const coXY=n=>'('+(+n.x.toFixed(3))+', '+(+n.y.toFixed(3))+')';
+function coPanelHTML(){const f=coGet(),c=coCount(f),li=a=>'<ul class="coL">'+a.slice(0,12).map(x=>'<li>'+x+'</li>').join('')+(a.length>12?'<li>… and '+(a.length-12)+' more</li>':'')+'</ul>',
+ sec=(k,n,h,d,items,fix)=>n?'<div class="coS"><div class="coH"><b>'+h+'</b> <span class="coN">'+n+'</span>'+(fix?'<button data-co="'+k+'">'+fix+'</button>':'')+'</div><p>'+d+'</p>'+li(items)+'</div>':'';
+ let h='<div class="coTop">'+(c?'<b class="coBad">⚠ '+c+' problem'+(c>1?'s':'')+' found.</b> These look connected on the canvas but are not, or are not what they seem, and can give results that are wrong without any warning.'+(f.co.length||f.zl.length||f.dup.some(x=>x[2])||f.on.some(x=>x[3])?' <button data-co="all" class="on">Fix all</button>':''):'<b class="coOk">✓ No problems found.</b> Every node that looks joined is joined, and no member is hidden under another.')+'</div>';
+ h+=sec('co',f.co.length,'Nodes on top of each other','Two separate nodes at the same point. The members at one are not connected to the members at the other, so the structure may come apart or act as separate pieces. Fix joins each pair (supports and springs combined, loads added).',f.co.map(([a,b])=>coLab(a)+' and '+coLab(b)+' at '+coXY(a)),'Join');
+ h+=sec('zl',f.zl.length,'Zero-length members','Both ends at the same point. A member with no length has no stiffness to give, so it is left out of the analysis. Fix deletes it.',f.zl.map(m=>coMl(m)+' at '+coXY(m.a)),'Delete');
+ const di=f.dup.filter(x=>x[2]).length;
+ h+=sec('dup',f.dup.length,'Duplicate members','Two members between the same two nodes, one on top of the other. Their stiffness adds, as two members side by side would, which is rarely what was meant. Fix deletes exact copies'+(di<f.dup.length?'; the '+(f.dup.length-di)+' pair'+(f.dup.length-di>1?'s':'')+' with different properties or loads are left for you to sort out':'')+'.',f.dup.map(([p,q,id])=>coMl(p)+' and '+coMl(q)+(id?' (exact copies)':' (different properties or loads)')),di?'Delete copies':'');
+ h+=sec('ov',f.ov.length,'Members overlapping along one line','Straight members lying along the same line over part of their length, for example one long member drawn over a run of shorter ones. They share no node along the overlap, so they do not work together there. Delete or redraw the one you do not want.',f.ov.map(([p,q])=>coMl(p)+' and '+coMl(q)),'Select them');
+ const ok=f.on.filter(x=>x[3]).length;
+ h+=sec('on',f.on.length,'Nodes lying on a member without being connected','The node sits on the member but the member runs straight past it, so nothing is transferred there. Fix splits the member at the node and connects it'+(ok<f.on.length?' (a node within 4 % of the member’s length from an end has to be connected by hand)':'')+'.',f.on.map(([n,m,t,o])=>coLab(n)+' on '+coMl(m)+' at '+(100*t).toFixed(0)+' % of its length'+(o?'':' (too close to the end to split here)')),ok?'Connect':'');
+ h+=sec('iso',f.iso.length,'Nodes with no members (for information)','A node that nothing is connected to. It is not counted as a problem while you are building, but on its own it is free to move and makes the structure unstable. Fix deletes these nodes.',f.iso.map(n=>coLab(n)+' at '+coXY(n)),'Delete');
+ return h+'<p class="coFt">Points closer than '+(CO.tol*1e3)+' mm count as the same point. Each fix can be undone (Ctrl+Z).</p>'}
+function coPanel(){showV('Check model',coPanelHTML());const vb=$('vb');vb.onclick=e=>{const b=e.target.closest&&e.target.closest('button[data-co]');if(!b)return;const k=b.dataset.co;
+ if(k=='ov'){const f=coGet();sel={t:'multi',nodes:new Set(),members:new Set(f.ov.flat()),anns:new Set()};$('vmodal').hidden=true;buildPop();draw();return}
+ const n=coFix(k);vb.innerHTML=coPanelHTML();fioMsg(n?(n==1?'1 change made':n+' changes made')+'. Undo to restore.':'Nothing to change.')}}
+/* the ⚠ button in the canvas toolbar */
+function coBadge(){if(drag&&(drag.t=='m'||drag.t=='gm'))return;let b=$('coB');if(!b){const t=$('ctb');if(!t)return;b=document.createElement('button');b.id='coB';b.type='button';b.onclick=coPanel;t.appendChild(b)}
+ const f=coGet(),c=coCount(f);b.hidden=!c;if(c){const x='⚠ '+c+' model problem'+(c>1?'s':'');if(b.textContent!==x){b.textContent=x;b.title='Open the model check: '+[f.co.length&&f.co.length+' pair(s) of nodes on top of each other',f.zl.length&&f.zl.length+' zero-length member(s)',f.dup.length&&f.dup.length+' duplicate member(s)',f.ov.length&&f.ov.length+' overlapping member(s)',f.on.length&&f.on.length+' node(s) on a member but not connected'].filter(Boolean).join(', ')}}}
+/* ring and label on the drag target */
+function coDraw(){const t=CO.tgt;if(!t||!drag)return;ctx.save();const c='#00e5ff';let X,Y,lab;ctx.strokeStyle=c;
+ if(t.t=='n'){X=sx(t.n.x);Y=sy(t.n.y);lab=t.many?'release to join':'release to join to '+coLab(t.n)}else{const q=arcP(t.m,t.u);X=sx(q.x);Y=sy(q.y);lab='release to connect to '+coMl(t.m);ctx.globalAlpha=.4;ctx.lineWidth=8;ctx.lineCap='round';ctx.beginPath();mpts(t.m).forEach((pt,i)=>i?ctx.lineTo(sx(pt.x),sy(pt.y)):ctx.moveTo(sx(pt.x),sy(pt.y)));ctx.stroke();ctx.globalAlpha=1}
+ ctx.lineWidth=2;ctx.shadowColor=c;ctx.shadowBlur=10;ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(X,Y,13,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);ctx.shadowBlur=0;
+ ctx.font='600 11.5px system-ui,sans-serif';const w=ctx.measureText(lab).width,bx=X+18,by=Y-30;ctx.fillStyle=css('--panel')||'#140f2a';ctx.globalAlpha=.92;ctx.beginPath();ctx.roundRect?ctx.roundRect(bx-6,by-13,w+12,19,6):ctx.rect(bx-6,by-13,w+12,19);ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=c;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle=c;ctx.fillText(lab,bx,by);ctx.restore()}
+{const d0=draw;draw=function(){const r=d0.apply(this,arguments);try{coDraw();coBadge()}catch(e){}return r}}
+/* ⚑ Check model in the top bar, after Solve steps */
+{const b=document.createElement('button');b.id='mChk';b.textContent='⚑ Check model';b.title='Look for nodes on top of each other, zero-length, duplicate or overlapping members and nodes lying on a member without being connected';b.onclick=coPanel;const s=$('mSs');s?s.after(b):$('top').appendChild(b)}
+/* warn on opening a file and on opening the report */
+{const fo=fioOpenText;fioOpenText=function(){const ok=fo.apply(this,arguments);if(ok){CO.f=null;const c=coCount(coGet());if(c){const e=$('fioM')&&!$('vmodal').hidden?$('fioM'):$('fioT'),t=e?e.textContent:'';fioMsg(t+' The model check found '+c+' problem'+(c>1?'s':'')+' in it: see ⚠ in the canvas toolbar.',1)}}return ok}}
+{const ro=rpOpen;rpOpen=function(){const c=coCount(coGet());if(c)setTimeout(()=>fioMsg('Before you issue this report: the model check found '+c+' problem'+(c>1?'s':'')+' (⚠ in the canvas toolbar, or ⚑ Check model).',1),60);return ro.apply(this,arguments)}}
+/* help */
+HINTS.sel=HINTS.sel+' Drop a node on another node to join them, or on a member to connect it there (hold Alt to place it freely).';
+{const sk0=showKeys;showKeys=function(){sk0();const u=$('vb')&&$('vb').querySelector('ul');if(u)u.insertAdjacentHTML('beforeend','<li><b>Drag a node onto a node</b> to join them, or <b>onto a member</b> to connect it there; <b>Alt</b> while dragging places it freely. <b>⚑ Check model</b> lists nodes on top of each other, zero-length, duplicate and overlapping members.</li>')}}
+
+/* ---------- verification ---------- */
+{const rt0=runTests;runTests=function(){const out=rt0(),sv=[nodes,members,ann,sel,tool,first,drag,U,R2,S,ox,oy,gs,res],msg=fioMsg,G=t=>out.push({h:t}),T=(name,exp,got,tol)=>out.push({name,exp,got,tol,ok:Math.abs(got-exp)<=tol*Math.max(1,Math.abs(exp))}),Y=(name,c)=>T(name,1,c?1:0,0),
+  fresh=()=>{nodes=[];members=[];ann=[];sel=null;first=null;drag=null;U=[];R2=[]},EI=EI_REF,Rn=(r,n)=>r.R.find(o=>o.n===n).r,cap=cv.setPointerCapture;
+ fioMsg=()=>{};cv.setPointerCapture=()=>{};
+ const rc=cv.getBoundingClientRect(),ev=(n,o)=>Object.assign({button:0,pointerId:1,shiftKey:false,altKey:false,ctrlKey:false,metaKey:false,clientX:rc.left+sx(n.x),clientY:rc.top+sy(n.y)},o||{}),at=(x,y,o)=>ev({x,y},o);
+ try{G('Joining nodes that meet, the model check and the zero-length guard (v2.16)');
+  /* 1 joining two cantilevers end to end gives one continuous cantilever */
+  fresh();let a=nn(0,0,'fix'),b=nn(3,0),c=nn(3,0),d=nn(6,0);mm(a,b);mm(c,d);d.load={fx:0,fy:-10,m:0};let r=solve();Y('Two cantilevers drawn end to end but not joined: the outer one is unstable',!r.ok);
+  let o=coJoin(b,c);r=solve();T('  joined: 3 nodes',3,nodes.length,0);T('  2 members, now continuous',2,members.length,0);T('  tip deflection PL³/3EI over 6 m (mm)',-10*216/(3*EI)*1e3,r.u[3*d.i+1]*1e3,1e-9);T('  root moment PL (kNm)',60,Math.abs(Rn(r,a)[2]),1e-9);
+  /* 2 supports, springs, loads, settlement */
+  fresh();a=nn(0,0,'ry');b=nn(0,0,'rx');coJoin(a,b);Y('Roller V + roller H join into a pin',a.sup=='pin');
+  fresh();a=nn(0,0,'pin');b=nn(0,0,'fix');coJoin(a,b);Y('  pin + fixed = fixed',a.sup=='fix');
+  fresh();a=nn(0,0);b=nn(0,0);a.spr={x:0,y:1000,r:0};b.spr={x:0,y:2000,r:500};coJoin(a,b);T('Springs at one point add (ky, kN/m)',3000,a.spr.y,0);T('  (kθ, kNm/rad)',500,a.spr.r,0);
+  fresh();a=nn(0,0,'ry');b=nn(0,0);b.spr={x:0,y:2000,r:0};coJoin(a,b);Y('  a spring in a direction held rigidly is dropped',!a.spr);
+  fresh();a=nn(0,0);b=nn(0,0);a.load={fx:1,fy:-5,m:2};b.load={fx:0,fy:-7,m:-1};coJoin(a,b);T('Point loads add (Fy, kN)',-12,a.load.fy,0);T('  (M, kNm)',1,a.load.m,0);
+  fresh();a=nn(0,0,'pin');b=nn(0,0);b.sd=-.01;coJoin(a,b);T('  settlement carried over when only one node has it (mm)',-10,a.sd*1e3,1e-12);
+  /* 3 zero-length, duplicates, numbering */
+  fresh();a=nn(0,0);b=nn(3,0);mm(a,b);o=coJoin(a,b);T('Joining the two ends of a member removes it (members left)',0,members.length,0);T('  and says so',1,o.zl,0);
+  fresh();a=nn(0,0);b=nn(0,0);c=nn(3,0);mm(a,c);mm(c,b);o=coJoin(a,b);T('An exact copy (drawn the other way) is removed: 1 member',1,members.length,0);
+  fresh();a=nn(0,0);b=nn(0,0);c=nn(3,0);mm(a,c).w=-5;mm(c,b).w=5;o=coJoin(a,b);T('  normal UDL reversed with the member is still a copy',1,members.length,0);
+  fresh();a=nn(0,0);b=nn(0,0);c=nn(3,0);mm(a,c);mm(b,c,2);o=coJoin(a,b);T('Different stiffness: both kept (2 members) and reported',2,members.length,0);T('  reported',1,o.ov,0);
+  fresh();a=nn(0,0);b=nn(0,0);c=nn(3,0);mm(a,c,1,'beam',.2);mm(b,c,1,'beam',-.2);coJoin(a,b);T('Two arcs bulging opposite ways are not copies',2,members.length,0);
+  fresh();b=nn(0,0);c=nn(5,0);a=nn(0,0);coJoin(a,b);Y('The joined node takes the lower number (n1)',nodes.indexOf(a)==0);T('  and the others keep theirs (n2)',1,nodes.indexOf(c),0);
+  /* 4 landing on a member */
+  fresh();a=nn(0,0,'pin');c=nn(6,0,'ry');const bm=mm(a,c);bm.w=-10;const p=nn(2,0),q=nn(2,3);mm(p,q);q.load={fx:5,fy:0,m:0};r=solve();Y('Post standing on a beam without being connected: unstable',!r.ok);
+  let L_=coLand([p]);r=solve();T('Landing it connects it: beam split, 3 members',3,members.length,0);Y('  stable',r.ok);T('  horizontal reaction balances the 5 kN',-5,Rn(r,a)[0],1e-9);T('  vertical reactions still carry the 60 kN UDL',60,Rn(r,a)[1]+Rn(r,c)[1],1e-9);T('  the post node keeps its number (n3)',2,nodes.indexOf(p),0);
+  /* 5 the solver guard */
+  fresh();a=nn(0,0,'fix');b=nn(3,0);mm(a,b);mm(b,b);b.load={fx:0,fy:-10,m:0};r=solve();Y('A zero-length member no longer makes the structure unstable',r.ok);T('  it is left out of the analysis (reported)',1,(r.zl||[]).length,0);T('  tip deflection PL³/3EI (mm)',-10*27/(3*EI)*1e3,r.u[3*b.i+1]*1e3,1e-9);
+  /* 6 the model check */
+  fresh();a=nn(0,0,'pin');b=nn(4,0);c=nn(8,0,'ry');const d2=nn(4,0),e2=nn(4,3),f2=nn(2,0),g2=nn(12,5);mm(a,b);mm(b,c);mm(d2,e2);mm(a,c);mm(b,c);mm(e2,e2);
+  let F=coFind();T('Check: nodes on top of each other (1 pair)',1,F.co.length,0);T('  zero-length members',1,F.zl.length,0);T('  duplicate members',1,F.dup.length,0);T('  members overlapping along one line (m4 over m1, m2 and m5)',3,F.ov.length,0);T('  nodes lying on a member (n2 and n4 on m4, n6 on m1 and m4)',4,F.on.length,0);T('  nodes with no members (n6, n7)',2,F.iso.length,0);
+  CO.f=null;let n=coFix('all');F=coFind();T('Fix all: no nodes on top of each other',0,F.co.length,0);T('  no zero-length members',0,F.zl.length,0);T('  no duplicates',0,F.dup.length,0);T('  no nodes lying on a member',0,F.on.length,0);T('  the long member, connected along its length, became copies of the short ones and went: no overlaps',0,F.ov.length,0);T('  4 members left',4,members.length,0);T('  the isolated node n7 is left (information only)',1,F.iso.length,0);
+  undo();T('  one undo brings it all back (7 nodes)',7,nodes.length,0);
+  /* 7 the canvas: drag, group drag, nudge, Node tool, Delete tool, undo */
+  const vw=[S,ox,oy];S=60;ox=200;oy=400;tool='sel';
+  fresh();gs=.5;a=nn(0,0,'fix');b=nn(3,0);c=nn(3.4,.6);d=nn(6,0);mm(a,b);mm(c,d);d.load={fx:0,fy:-10,m:0};
+  cv.onpointerdown(ev(c));cv.onpointermove(ev({x:3.08,y:.04}));Y('Dragging a node near another snaps it exactly onto it',c.x===3&&c.y===0);Y('  and targets that node',CO.tgt&&CO.tgt.n===b);cv.onpointerup(ev(b));
+  T('  released: joined (3 nodes)',3,nodes.length,0);r=solve();T('  the cantilever now carries the load to the wall: tip deflection PL³/3EI over 6 m (mm)',-10*216/(3*EI)*1e3,r.u[3*d.i+1]*1e3,1e-9);undo();T('  undo separates them (4 nodes)',4,nodes.length,0);
+  fresh();a=nn(0,0,'fix');b=nn(3.2,0);c=nn(5,1);d=nn(8,1);mm(a,b);mm(c,d);cv.onpointerdown(ev(c));cv.onpointermove(ev({x:3.25,y:.05},{altKey:true}));cv.onpointerup(ev({x:3.25,y:.05},{altKey:true}));T('  with Alt held: placed freely, not joined',4,nodes.length,0);
+  fresh();a=nn(0,0,'pin');c=nn(6,0,'ry');mm(a,c);const s1=nn(2.5,2),s2=nn(2.5,4);mm(s1,s2);cv.onpointerdown(ev(s1));cv.onpointermove(ev({x:2.53,y:.07}));Y('Dragging a node onto a member snaps it onto the member',Math.abs(s1.y)<1e-12&&CO.tgt&&CO.tgt.t=='m');cv.onpointerup(ev(s1));T('  released: member split and connected (3 members)',3,members.length,0);Y('  stable',solve().ok);
+  fresh();a=nn(0,0,'fix');b=nn(3,0);c=nn(4,1);d=nn(7,1);mm(a,b);mm(c,d);sel={t:'multi',nodes:new Set([c,d]),members:new Set(),anns:new Set()};cv.onpointerdown(ev(c));cv.onpointermove(ev({x:3.06,y:.05}));cv.onpointerup(ev({x:3.06,y:.05}));
+  T('Group drag: the group lands on the node and joins (3 nodes)',3,nodes.length,0);T('  the other moved node stays parallel: d at x = 6',6,d.x,1e-9);
+  fresh();a=nn(0,0,'fix');b=nn(3,0);c=nn(3,.5);d=nn(6,.5);mm(a,b);mm(c,d);sel={t:'n',n:c};gs=.5;dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown'}));T('Arrow-key nudge onto a node joins them (3 nodes)',3,nodes.length,0);
+  fresh();gs=1;S=200;a=nn(1,0);tool='node';cv.onpointerdown(at(.8,.1));cv.onpointerup(at(.8,.1));T('Node tool: a click that snaps onto an existing node makes no second node',1,nodes.length,0);
+  fresh();a=nn(1,0);tool='member';cv.onpointerdown(at(3,0));cv.onpointerup(at(3,0));gs=1;cv.onpointerdown(at(.8,.1));cv.onpointerup(at(.8,.1));first=null;T('Member tool: drawing to a point on an existing node connects to it (2 nodes)',2,nodes.length,0);T('  with one member',1,members.length,0);
+  fresh();S=60;a=nn(0,0,'pin');b=nn(3,0);c=nn(6,0,'ry');mm(a,b).w=-10;mm(b,c).w=-10;tool='del';cv.onpointerdown(ev(b));cv.onpointerup(ev(b));T('Delete tool on a node between two members in line joins them (1 member)',1,members.length,0);
+  fresh();tool='sel';a=nn(0,0,'pin');b=nn(3,0);mm(a,b);pushU();b.x=4;undo();T('Undo then a click on empty canvas: redo is kept',1,R2.length,0);cv.onpointerdown(at(1.5,2));cv.onpointerup(at(1.5,2));T('  (redo history after the click)',1,R2.length,0);T('  and no undo step was added',0,U.length,0);
+  S=vw[0];ox=vw[1];oy=vw[2];
+  /* 8 every example is clean */
+  let bad=[];Object.keys(PRESETS).forEach(k=>{fresh();try{PRESETS[k][1]();const f=coFind();if(coCount(f))bad.push(k)}catch(e){bad.push(k+'!')}});T('No example structure has a model-check problem'+(bad.length?' ('+bad.slice(0,4).join(', ')+')':''),0,bad.length,0);
+ }catch(e){out.push({name:'v2.16: '+e.message,exp:1,got:0,tol:0,ok:false})}
+ finally{fioMsg=msg;cv.setPointerCapture=cap;CO.tgt=null;CO.u0=null;CO.f=null}
+ [nodes,members,ann,sel,tool,first,drag,U,R2,S,ox,oy,gs,res]=sv;return out}}
 </script></body></html>
 </body></html>
